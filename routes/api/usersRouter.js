@@ -8,25 +8,27 @@ const usersRouter = express.Router();
 
 usersRouter.get("/current", authenticate, usersCtrl.getCurrentUser);
 
-// usersRouter.put(
-//   "/:_id",
-//   authenticate,
-//   validBody(schema.userRegisterSchema),
-//   authController.updateUser
-// );
-
 // usersRouter.patch(
 //   "/theme",
 //   authenticate,
 //   validBody(themeSchema),
-//   authController.updateTheme
+//   usersCtrl.updateTheme
+// );
+
+// usersRouter.put(
+//   "/:_id",
+//   authenticate,
+//   validBody(schema.userRegisterSchema),
+//   usersCtrl.updateUser
 // );
 
 // usersRouter.patch(
-//   "/avatars",
+//   "/avatar",
 //   authenticate,
 //   uploadAvatar.single("avatar"),
-//   authController.updateAvatar
+//   usersCtrl.updateAvatar
 // );
+
+// usersRouter.patch("/help", authenticate, ..., usersCtrl.helpRequest);
 
 export default usersRouter;
