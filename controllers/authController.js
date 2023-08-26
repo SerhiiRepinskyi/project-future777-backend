@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import gravatar from "gravatar"
 
 import User from "../models/userModel.js";
 
@@ -26,9 +27,11 @@ const registerUser = async (req, res) => {
     id: newUser._id,
   };
 
+  const avatarURL = await gravatar.url(email, { s: '200', r: 'pg', d: '404' });
+
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
 
-  await User.findByIdAndUpdate(newUser._id, { token });
+  await User.findByIdAndUpdate(newUser._id, { token, avatarURL });
 
   res.status(201).json({
     token,
@@ -58,7 +61,7 @@ const loginUser = async (req, res) => {
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
 
-  await User.findByIdAndUpdate(user._id, { token });
+  await User.findByIdAndUpdate(user._id, { token});
 
   res.json({
     token,

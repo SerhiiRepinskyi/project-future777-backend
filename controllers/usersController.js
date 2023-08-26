@@ -1,10 +1,13 @@
-// import User from "../models/userModel.js";
+import fs from "fs/promises";
+import User from "../models/userModel.js";
 
 import nodemailer from "nodemailer";
 
 import { ctrlWrapper } from "../decorators/index.js";
 
-// import { HttpError } from "../helpers/index.js";
+// import { HttpError} from "../helpers/index.js";
+import {cloudinary} from "../helpers/index.js"
+import { fstat } from "fs";
 
 const { UKR_NET_EMAIL, UKR_NET_PASSWORD, BASE_URL } = process.env;
 
@@ -19,7 +22,15 @@ const getCurrentUser = (req, res) => {
 
 // const updateUser = async (req, res) => {};
 
-// const updateAvatar = async (req, res) => {};
+const updateAvatar = async (req, res) => {
+  const { _id } = req.user;
+  const { path: filePath } = req.file;
+  const fileData = await cloudinary.uploader.upload(filePath, {folder: "teamProject/avatar",})
+  console.log(fileData.url)
+  await User.findByIdAndUpdate(_id, { avatarURL: fileData.url })
+  fs.unlink(filePath);
+  res.status(200).json({"avatarURL": fileData.url})
+};
 
 // const updateTheme = async (req, res) => {};
 
@@ -50,4 +61,5 @@ const helpRequest = async (req, res) => {
 export default {
   getCurrentUser: ctrlWrapper(getCurrentUser),
   helpRequest: ctrlWrapper(helpRequest),
+  updateAvatar:ctrlWrapper(updateAvatar),
 };

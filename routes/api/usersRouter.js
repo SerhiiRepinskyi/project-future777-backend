@@ -6,7 +6,8 @@ import validateBody from "../../decorators/validateBody.js";
 
 import usersSchemas from "../../schemas/userSchemas.js";
 
-import authenticate from "../../middlewares/authenticate.js";
+import {authenticate, upload } from "../../middlewares/index.js"
+
 
 const usersRouter = express.Router();
 
@@ -26,12 +27,12 @@ usersRouter.get("/current", authenticate, usersCtrl.getCurrentUser);
 //   usersCtrl.updateUser
 // );
 
-// usersRouter.patch(
-//   "/avatar",
-//   authenticate,
-//   uploadAvatar.single("avatar"),
-//   usersCtrl.updateAvatar
-// );
+usersRouter.patch(
+  "/avatar",
+  authenticate,
+  upload.single("avatarURL"),
+  usersCtrl.updateAvatar
+);
 
 // usersRouter.patch("/help", authenticate, ..., usersCtrl.helpRequest);
 
