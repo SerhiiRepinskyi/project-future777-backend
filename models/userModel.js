@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 import { handleMongooseError, validateAtUpdate } from "./hooks.js";
-import { emailRegexp } from "../constans/userConstans.js";
+import { emailRegexp, themeList } from "../constans/userConstans.js";
 
 const userSchema = new Schema(
   {
@@ -21,7 +21,7 @@ const userSchema = new Schema(
     },
     theme: {
       type: String,
-      enum: ["Light", "Dark", "Violet"],
+      enum: [...themeList],
       default: "Dark",
     },
     token: {

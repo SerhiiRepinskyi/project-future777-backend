@@ -12,17 +12,17 @@ const usersRouter = express.Router();
 
 usersRouter.get("/current", authenticate, usersCtrl.getCurrentUser);
 
-// usersRouter.patch(
-//   "/theme",
-//   authenticate,
-//   validBody(themeSchema),
-//   usersCtrl.updateTheme
-// );
+usersRouter.patch(
+  "/theme",
+  authenticate,
+  validateBody(usersSchemas.userUpdateThemeSchema),
+  usersCtrl.updateTheme
+);
 
 // usersRouter.put(
 //   "/:_id",
 //   authenticate,
-//   validBody(schema.userRegisterSchema),
+//   validateBody(usersSchemas.userRegisterSchema),
 //   usersCtrl.updateUser
 // );
 

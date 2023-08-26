@@ -2,6 +2,8 @@
 
 import nodemailer from "nodemailer";
 
+import User from "../models/userModel.js";
+
 import { ctrlWrapper } from "../decorators/index.js";
 
 // import { HttpError } from "../helpers/index.js";
@@ -21,7 +23,20 @@ const getCurrentUser = (req, res) => {
 
 // const updateAvatar = async (req, res) => {};
 
-// const updateTheme = async (req, res) => {};
+const updateTheme = async (req, res) => {
+  const { _id } = req.user;
+  const { theme } = req.body;
+
+  const user = await User.findByIdAndUpdate(_id, { theme }, { new: true });
+
+  res.json({
+    user: {
+      name: user.name,
+      email: user.email,
+      theme: user.theme,
+    },
+  });
+};
 
 const helpRequest = async (req, res) => {
   const { email, text } = req.body;
@@ -36,6 +51,7 @@ const helpRequest = async (req, res) => {
   };
 
   const transporter = nodemailer.createTransport(config);
+
   const emailOptions = {
     from: UKR_NET_EMAIL,
     to: "taskpro.project@gmail.com",
@@ -49,5 +65,6 @@ const helpRequest = async (req, res) => {
 
 export default {
   getCurrentUser: ctrlWrapper(getCurrentUser),
+  updateTheme: ctrlWrapper(updateTheme),
   helpRequest: ctrlWrapper(helpRequest),
 };

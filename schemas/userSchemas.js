@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { emailRegexp } from "../constans/userConstans.js";
+import { emailRegexp, themeList } from "../constans/userConstans.js";
 
 const userRegisterSchema = Joi.object({
   name: Joi.string().min(2).required().messages({
@@ -27,14 +27,21 @@ const userLoginSchema = Joi.object({
   }),
 });
 
+const userUpdateThemeSchema = Joi.object({
+  theme: Joi.string()
+    .valid(...themeList)
+    .required(),
+});
+
 const emailSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required().messages({
-      "any.required": `missing required "email" field`,
+    "any.required": `missing required "email" field`,
   }),
 });
 
 export default {
   userRegisterSchema,
   userLoginSchema,
+  userUpdateThemeSchema,
   emailSchema,
 };
