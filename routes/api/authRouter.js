@@ -26,6 +26,8 @@ authRouter.get("/current", authenticate, authController.getCurrent);
 
 authRouter.post("/logout", authenticate, authController.logout);
 
+authRouter.post("/help", validateBody(usersSchemas.emailSchema), authController.sendNeedHelpEmail);
+
 // router.put(
 //   "/:_id",
 //   authenticate,
