@@ -1,6 +1,6 @@
 import express from "express";
 
-import authController from "../../controllers/authController.js";
+import authCtrl from "../../controllers/authController.js";
 
 import validateBody from "../../decorators/validateBody.js";
 
@@ -13,18 +13,19 @@ const authRouter = express.Router();
 authRouter.post(
   "/register",
   validateBody(usersSchemas.userRegisterSchema),
-  authController.register
+  authCtrl.registerUser
 );
 
 authRouter.post(
   "/login",
   validateBody(usersSchemas.userLoginSchema),
-  authController.login
+  authCtrl.loginUser
 );
 
-authRouter.get("/current", authenticate, authController.getCurrent);
 
-authRouter.post("/logout", authenticate, authController.logout);
+
+
+
 
 authRouter.post("/help", validateBody(usersSchemas.emailSchema), authController.sendNeedHelpEmail);
 
@@ -48,5 +49,9 @@ authRouter.post("/help", validateBody(usersSchemas.emailSchema), authController.
 //   uploadAvatar.single("avatar"),
 //   authController.updateAvatar
 // );
+
+
+authRouter.post("/logout", authenticate, authCtrl.logoutUser);
+
 
 export default authRouter;

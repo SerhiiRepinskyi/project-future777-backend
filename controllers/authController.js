@@ -10,7 +10,7 @@ import { HttpError } from "../helpers/index.js";
 
 const { JWT_SECRET, UKR_NET_EMAIL, UKR_NET_PASSWORD, BASE_URL } = process.env;
 
-const register = async (req, res) => {
+const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
 
   const user = await User.findOne({ email });
@@ -42,7 +42,7 @@ const register = async (req, res) => {
   });
 };
 
-const login = async (req, res) => {
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
@@ -72,21 +72,13 @@ const login = async (req, res) => {
   });
 };
 
-const getCurrent = (req, res) => {
-  const { name, email, theme } = req.user;
-  res.json({
-    name,
-    email,
-    theme,
-  });
-};
-
-const logout = async (req, res) => {
+const logoutUser = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
 
   res.status(204).send();
 };
+
 
 const sendNeedHelpEmail = async (req, res) => {
   const { email, text } = req.body
@@ -118,10 +110,13 @@ const sendNeedHelpEmail = async (req, res) => {
 
 // const updateTheme = async (req, res) => {};
 
+
 export default {
-  login: ctrlWrapper(login),
-  register: ctrlWrapper(register),
-  getCurrent: ctrlWrapper(getCurrent),
-  logout: ctrlWrapper(logout),
+  loginUser: ctrlWrapper(loginUser),
+  registerUser: ctrlWrapper(registerUser),
+  logoutUser: ctrlWrapper(logoutUser),
   sendNeedHelpEmail: ctrlWrapper(sendNeedHelpEmail),
+    
+    
+
 };
