@@ -22,6 +22,36 @@ authRouter.post(
   authCtrl.loginUser
 );
 
+
+
+
+
+
+authRouter.post("/help", validateBody(usersSchemas.emailSchema), authController.sendNeedHelpEmail);
+
+// router.put(
+//   "/:_id",
+//   authenticate,
+//   validBody(schema.userRegisterSchema),
+//   authController.updateUser
+// );
+
+// router.patch(
+//   "/theme",
+//   authenticate,
+//   validBody(themeSchema),
+//   authController.updateTheme
+// );
+
+// router.patch(
+//   "/avatars",
+//   authenticate,
+//   uploadAvatar.single("avatar"),
+//   authController.updateAvatar
+// );
+
+
 authRouter.post("/logout", authenticate, authCtrl.logoutUser);
+
 
 export default authRouter;
