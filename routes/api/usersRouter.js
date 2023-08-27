@@ -6,8 +6,7 @@ import validateBody from "../../decorators/validateBody.js";
 
 import usersSchemas from "../../schemas/userSchemas.js";
 
-import {authenticate, upload } from "../../middlewares/index.js"
-
+import { authenticate, upload } from "../../middlewares/index.js";
 
 const usersRouter = express.Router();
 
@@ -21,7 +20,7 @@ usersRouter.patch(
 );
 
 // usersRouter.put(
-//   "/:_id",
+//   "/",
 //   authenticate,
 //   validateBody(usersSchemas.userRegisterSchema),
 //   usersCtrl.updateUser
