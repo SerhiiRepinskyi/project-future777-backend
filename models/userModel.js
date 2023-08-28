@@ -1,12 +1,20 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 import { handleMongooseError, validateAtUpdate } from "./hooks.js";
-import { emailRegexp } from "../constans/userConstans.js";
+import {
+  nameRegexp,
+  emailRegexp,
+  passwordRegexp,
+  themeList,
+} from "../constans/userConstans.js";
 
 const userSchema = new Schema(
   {
     name: {
       type: String,
+      minlength: [2, "Name should be at least 2 characters long"],
+      maxlength: [32, "Name should not exceed 32 characters"],
+      match: nameRegexp,
       required: [true, "Name is required"],
     },
     email: {
@@ -17,18 +25,21 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
+      minlength: [8, "Password should be at least 2 characters long"],
+      maxlength: [64, "Password should not exceed 32 characters"],
+      match: passwordRegexp,
       required: [true, "Password is required"],
     },
     theme: {
       type: String,
-      enum: ["Light", "Dark", "Violet"],
+      enum: [...themeList],
       default: "Dark",
     },
+    avatarURL: { type: String, default: "" },
     token: {
       type: String,
       default: "",
     },
-    avatarURL: { type: String, default: "" },
   },
   { versionKey: false, timestamps: true }
 );

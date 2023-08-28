@@ -6,24 +6,23 @@ import validateBody from "../../decorators/validateBody.js";
 
 import usersSchemas from "../../schemas/userSchemas.js";
 
-import {authenticate, upload } from "../../middlewares/index.js"
-
+import { authenticate, upload } from "../../middlewares/index.js";
 
 const usersRouter = express.Router();
 
 usersRouter.get("/current", authenticate, usersCtrl.getCurrentUser);
 
-// usersRouter.patch(
-//   "/theme",
-//   authenticate,
-//   validBody(themeSchema),
-//   usersCtrl.updateTheme
-// );
+usersRouter.patch(
+  "/theme",
+  authenticate,
+  validateBody(usersSchemas.userUpdateThemeSchema),
+  usersCtrl.updateTheme
+);
 
 // usersRouter.put(
-//   "/:_id",
+//   "/",
 //   authenticate,
-//   validBody(schema.userRegisterSchema),
+//   validateBody(usersSchemas.userRegisterSchema),
 //   usersCtrl.updateUser
 // );
 
@@ -34,13 +33,11 @@ usersRouter.patch(
   usersCtrl.updateAvatar
 );
 
-// usersRouter.patch("/help", authenticate, ..., usersCtrl.helpRequest);
-
 usersRouter.post(
   "/help",
   authenticate,
-  validateBody(usersSchemas.emailSchema),
-  usersCtrl.helpRequest
+  validateBody(usersSchemas.needHelpSchema),
+  usersCtrl.needHelp
 );
 
 export default usersRouter;

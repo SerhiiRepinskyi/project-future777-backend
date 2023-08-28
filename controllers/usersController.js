@@ -1,65 +1,77 @@
 import fs from "fs/promises";
-import User from "../models/userModel.js";
 
-import nodemailer from "nodemailer";
+import User from "../models/userModel.js";
 
 import { ctrlWrapper } from "../decorators/index.js";
 
-// import { HttpError} from "../helpers/index.js";
-import {cloudinary} from "../helpers/index.js"
-import { fstat } from "fs";
-
-const { UKR_NET_EMAIL, UKR_NET_PASSWORD, BASE_URL } = process.env;
+import {
+  HttpError,
+  cloudinary,
+  createEmail,
+  sendEmail,
+} from "../helpers/index.js";
 
 const getCurrentUser = (req, res) => {
-  const { name, email, theme } = req.user;
+  const { name, email, theme, avatarURL } = req.user;
   res.json({
     name,
     email,
     theme,
+    avatarURL,
   });
 };
 
-// const updateUser = async (req, res) => {};
+const updateTheme = async (req, res) => {
+  const { _id } = req.user;
+  const { theme } = req.body;
+
+  const user = await User.findByIdAndUpdate(_id, { theme }, { new: true });
+
+  res.json({
+    user: {
+      name: user.name,
+      email: user.email,
+      theme: user.theme,
+      avatarURL: user.avatarURL,
+    },
+  });
+};
+
+// const updateUser = async (req, res) => { твій код :) };
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: filePath } = req.file;
-  const fileData = await cloudinary.uploader.upload(filePath, {folder: "teamProject/avatar",})
-  console.log(fileData.url)
-  await User.findByIdAndUpdate(_id, { avatarURL: fileData.url })
+  const fileData = await cloudinary.uploader.upload(filePath, {
+    folder: "teamProject/avatar",
+  });
+  console.log(fileData.url);
+  await User.findByIdAndUpdate(_id, { avatarURL: fileData.url });
   fs.unlink(filePath);
-  res.status(200).json({"avatarURL": fileData.url})
+  res.status(200).json({ avatarURL: fileData.url });
 };
 
-// const updateTheme = async (req, res) => {};
+const needHelp = async (req, res) => {
+  const { email, comment } = req.body;
+  if (!email) {
+    throw HttpError(400, "Email is required field");
+  }
+  if (!comment) {
+    throw HttpError(400, "Comment is required field");
+  }
 
-const helpRequest = async (req, res) => {
-  const { email, text } = req.body;
-  const config = {
-    host: "smtp.meta.ua",
-    port: 465,
-    secure: true,
-    auth: {
-      user: UKR_NET_EMAIL,
-      pass: UKR_NET_PASSWORD,
-    },
-  };
+  const helpEmail = createEmail({ email, comment });
 
-  const transporter = nodemailer.createTransport(config);
-  const emailOptions = {
-    from: UKR_NET_EMAIL,
-    to: "taskpro.project@gmail.com",
-    subject: "Need help",
-    text: `${text}, ${email}`,
-    html: `<a href="${BASE_URL}/api/users/help/"  target="_blank">Click me</a>`,
-  };
+  await sendEmail(helpEmail);
 
-  transporter.sendMail(emailOptions);
+  res.json({
+    message: "Email send success",
+  });
 };
 
 export default {
   getCurrentUser: ctrlWrapper(getCurrentUser),
-  helpRequest: ctrlWrapper(helpRequest),
-  updateAvatar:ctrlWrapper(updateAvatar),
+  updateTheme: ctrlWrapper(updateTheme),
+  updateAvatar: ctrlWrapper(updateAvatar),
+  needHelp: ctrlWrapper(needHelp),
 };

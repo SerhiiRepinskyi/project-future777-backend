@@ -32,7 +32,7 @@ router.post("/:id/columns",	boardsController.addColumn);
 ### routes for "/api/columns" endpoint
 
 # update column
-router.put("/:id", columnsController.updateColumn);
+router.patch("/:id", columnsController.updateColumn);
 
 # delete column
 router.delete("/:id", columnsController.deleteById);
