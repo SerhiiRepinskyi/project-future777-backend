@@ -27,6 +27,7 @@ const registerUser = async (req, res) => {
     id: newUser._id,
   };
 
+
   const avatarURL = await gravatar.url(email, { s: "200", r: "pg", d: "404" });
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "23h" });
