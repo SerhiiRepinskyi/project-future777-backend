@@ -33,7 +33,7 @@ const userSchema = new Schema(
     theme: {
       type: String,
       enum: [...themeList],
-      default: "Dark",
+      default: "dark",
     },
     avatarURL: { type: String, default: "" },
     token: {

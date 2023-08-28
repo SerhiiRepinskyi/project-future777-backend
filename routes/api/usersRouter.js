@@ -12,30 +12,28 @@ const usersRouter = express.Router();
 
 usersRouter.get("/current", authenticate, usersCtrl.getCurrentUser);
 
+usersRouter.use(authenticate);
+
 usersRouter.patch(
   "/theme",
-  authenticate,
   validateBody(usersSchemas.userUpdateThemeSchema),
   usersCtrl.updateTheme
 );
 
 // usersRouter.put(
 //   "/",
-//   authenticate,
 //   validateBody(usersSchemas.userRegisterSchema),
 //   usersCtrl.updateUser
 // );
 
 usersRouter.patch(
   "/avatar",
-  authenticate,
   upload.single("avatarURL"),
   usersCtrl.updateAvatar
 );
 
 usersRouter.post(
   "/help",
-  authenticate,
   validateBody(usersSchemas.needHelpSchema),
   usersCtrl.needHelp
 );
