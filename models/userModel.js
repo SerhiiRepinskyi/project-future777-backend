@@ -35,11 +35,11 @@ const userSchema = new Schema(
       enum: [...themeList],
       default: "Dark",
     },
+    avatarURL: { type: String, default: "" },
     token: {
       type: String,
       default: "",
     },
-    avatarURL: { type: String, default: "" },
   },
   { versionKey: false, timestamps: true }
 );

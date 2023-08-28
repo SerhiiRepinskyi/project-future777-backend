@@ -12,11 +12,12 @@ import {
 } from "../helpers/index.js";
 
 const getCurrentUser = (req, res) => {
-  const { name, email, theme } = req.user;
+  const { name, email, theme, avatarURL } = req.user;
   res.json({
     name,
     email,
     theme,
+    avatarURL,
   });
 };
 
@@ -31,6 +32,7 @@ const updateTheme = async (req, res) => {
       name: user.name,
       email: user.email,
       theme: user.theme,
+      avatarURL: user.avatarURL,
     },
   });
 };
