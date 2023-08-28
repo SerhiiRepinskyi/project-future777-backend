@@ -48,9 +48,14 @@ const userUpdateThemeSchema = Joi.object({
     .required(),
 });
 
-const emailSchema = Joi.object({
+const needHelpSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required().messages({
-    "any.required": `missing required "email" field`,
+    "any.required": "missing required email field",
+    "string.empty": "email cannot be empty",
+  }),
+  comment: Joi.string().required().messages({
+    "any.required": "missing required comment field",
+    "string.empty": "comment cannot be empty",
   }),
 });
 
@@ -58,5 +63,5 @@ export default {
   userRegisterSchema,
   userLoginSchema,
   userUpdateThemeSchema,
-  emailSchema,
+  needHelpSchema,
 };

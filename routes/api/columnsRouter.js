@@ -13,10 +13,10 @@ router.use(authenticate);
 
 // ** update column
 router.patch(
-	"/:id",
-	isValidId,
-	validateBody(boardsSchemas.columnSchema),
-	columnsController.updateColumn
+  "/:id",
+  isValidId,
+  validateBody(boardsSchemas.columnSchema),
+  columnsController.updateColumn
 );
 
 // ** delete column
@@ -24,10 +24,10 @@ router.delete("/:id", columnsController.deleteById);
 
 // ** add card
 router.post(
-	"/:id/cards",
-	isValidId,
-	validateBody(boardsSchemas.cardAdd), 
-	columnsController.addCard
+  "/:id/cards",
+  isValidId,
+  validateBody(boardsSchemas.cardAdd),
+  columnsController.addCard
 );
 
 export default router;

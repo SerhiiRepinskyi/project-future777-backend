@@ -33,13 +33,11 @@ usersRouter.patch(
   usersCtrl.updateAvatar
 );
 
-// usersRouter.patch("/help", authenticate, ..., usersCtrl.helpRequest);
-
 usersRouter.post(
   "/help",
   authenticate,
-  validateBody(usersSchemas.emailSchema),
-  usersCtrl.helpRequest
+  validateBody(usersSchemas.needHelpSchema),
+  usersCtrl.needHelp
 );
 
 export default usersRouter;

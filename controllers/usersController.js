@@ -1,17 +1,15 @@
 import fs from "fs/promises";
 
-import nodemailer from "nodemailer";
-
 import User from "../models/userModel.js";
 
 import { ctrlWrapper } from "../decorators/index.js";
 
-// import { HttpError} from "../helpers/index.js";
-
-import { cloudinary } from "../helpers/index.js";
-// import { fstat } from "fs";
-
-const { UKR_NET_EMAIL, UKR_NET_PASSWORD, BASE_URL } = process.env;
+import {
+  HttpError,
+  cloudinary,
+  createEmail,
+  sendEmail,
+} from "../helpers/index.js";
 
 const getCurrentUser = (req, res) => {
   const { name, email, theme } = req.user;
@@ -37,7 +35,7 @@ const updateTheme = async (req, res) => {
   });
 };
 
-// const updateUser = async (req, res) => {};
+// const updateUser = async (req, res) => { твій код :) };
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
@@ -51,34 +49,27 @@ const updateAvatar = async (req, res) => {
   res.status(200).json({ avatarURL: fileData.url });
 };
 
-const helpRequest = async (req, res) => {
-  const { email, text } = req.body;
-  const config = {
-    host: "smtp.meta.ua",
-    port: 465,
-    secure: true,
-    auth: {
-      user: UKR_NET_EMAIL,
-      pass: UKR_NET_PASSWORD,
-    },
-  };
+const needHelp = async (req, res) => {
+  const { email, comment } = req.body;
+  if (!email) {
+    throw HttpError(400, "Email is required field");
+  }
+  if (!comment) {
+    throw HttpError(400, "Comment is required field");
+  }
 
-  const transporter = nodemailer.createTransport(config);
+  const helpEmail = createEmail({ email, comment });
 
-  const emailOptions = {
-    from: UKR_NET_EMAIL,
-    to: "taskpro.project@gmail.com",
-    subject: "Need help",
-    text: `${text}, ${email}`,
-    html: `<a href="${BASE_URL}/api/users/help/"  target="_blank">Click me</a>`,
-  };
+  await sendEmail(helpEmail);
 
-  transporter.sendMail(emailOptions);
+  res.json({
+    message: "Email send success",
+  });
 };
 
 export default {
   getCurrentUser: ctrlWrapper(getCurrentUser),
   updateTheme: ctrlWrapper(updateTheme),
-  helpRequest: ctrlWrapper(helpRequest),
   updateAvatar: ctrlWrapper(updateAvatar),
+  needHelp: ctrlWrapper(needHelp),
 };

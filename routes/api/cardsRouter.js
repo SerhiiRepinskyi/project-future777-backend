@@ -10,12 +10,13 @@ const router = Router();
 router.use(authenticate);
 
 // ***************** cards routes
+
 // ** update card
 router.put(
-	"/:id",
-	isValidId,
-	validateBody(boardsSchemas.cardUpdate),
-	cardsController.updateCard
+  "/:id",
+  isValidId,
+  validateBody(boardsSchemas.cardUpdate),
+  cardsController.updateCard
 );
 
 // ** delete card
@@ -23,10 +24,10 @@ router.delete("/:id", cardsController.deleteById);
 
 // ** move card
 router.patch(
-	"/:id",
-	isValidId,
-	validateBody(boardsSchemas.cardMove), // FIXME:
-	cardsController.moveCard
+  "/:id",
+  isValidId,
+  validateBody(boardsSchemas.cardMove), // FIXME:
+  cardsController.moveCard
 );
 
 export default router;
