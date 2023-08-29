@@ -1,9 +1,10 @@
 <!-- USER -->
 
 1. Регистрация пользователя - POST
-http://localhost:3000/api/users/register
+http://localhost:8000/api/auth/register
     body:
         {
+        "name": "yyy",
         "password": "111",
         "email": "yyy@nnn.nnn"
         }
@@ -14,7 +15,7 @@ http://localhost:3000/api/users/register
         }
 
 2. Логин - POST
-http://localhost:3000/api/users/login
+http://localhost:8000/api/auth/login
     body:
         {
         "password": "111",
@@ -26,7 +27,7 @@ http://localhost:3000/api/users/login
         }
 
 3. Получить текущего пользователя - GET
-http://localhost:3000/api/users/current
+http://localhost:8000/api/users/current
     body - нет
     ответ:
         {
@@ -34,7 +35,7 @@ http://localhost:3000/api/users/current
         }
 
 4. Разлогиниться- POST
-http://localhost:3000/api/users/signout
+http://localhost:8000/api/auth/logout
     body:
         {
         "email": "yyy@nnn.nnn"

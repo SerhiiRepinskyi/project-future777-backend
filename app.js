@@ -2,6 +2,9 @@ import express from "express";
 import logger from "morgan";
 import cors from "cors";
 
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocument from './swagger.json' assert { type: 'json' };
+
 import authRouter from "./routes/api/authRouter.js";
 
 import usersRouter from "./routes/api/usersRouter.js";
@@ -26,6 +29,8 @@ app.use("/api/boards", boardsRouter);
 app.use("/api/columns", columnsRouter);
 app.use("/api/cards", cardsRouter);
 
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
@@ -34,5 +39,6 @@ app.use((err, req, res, next) => {
   const { status = 500, message = "Server error" } = err;
   res.status(status).json({ message });
 });
+
 
 export default app;
