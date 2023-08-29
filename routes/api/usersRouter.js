@@ -20,11 +20,11 @@ usersRouter.patch(
   usersCtrl.updateTheme
 );
 
-// usersRouter.put(
-//   "/",
-//   validateBody(usersSchemas.userRegisterSchema),
-//   usersCtrl.updateUser
-// );
+usersRouter.patch(
+  "/",
+  validateBody(usersSchemas.userRegisterSchema),
+  usersCtrl.updateUser
+);
 
 usersRouter.patch(
   "/avatar",

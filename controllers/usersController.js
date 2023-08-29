@@ -37,7 +37,37 @@ const updateTheme = async (req, res) => {
   });
 };
 
-// const updateUser = async (req, res) => { твій код :) };
+const updateUser = async (req, res) => {
+  const { _id } = req.user;
+  const { name, email, password } = req.body;
+
+  if (!name) {
+    throw HttpError(400, "Name is required field");
+  }
+  if (!email) {
+    throw HttpError(400, "Email is required field");
+  }
+  if (!password) {
+    throw HttpError(400, "Password is required field");
+  }
+
+  const user = await User.findByIdAndUpdate(
+    _id,
+    { name, email },
+    { new: true }
+  );
+  await user.hashPassword(password);
+  await user.save();
+
+  res.json({
+    user: {
+      name: user.name,
+      email: user.email,
+      theme: user.theme,
+      avatarURL: user.avatarURL,
+    },
+  });
+};
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
@@ -72,6 +102,7 @@ const needHelp = async (req, res) => {
 export default {
   getCurrentUser: ctrlWrapper(getCurrentUser),
   updateTheme: ctrlWrapper(updateTheme),
+  updateUser: ctrlWrapper(updateUser),
   updateAvatar: ctrlWrapper(updateAvatar),
   needHelp: ctrlWrapper(needHelp),
 };
