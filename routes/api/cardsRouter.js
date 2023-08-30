@@ -11,6 +11,9 @@ router.use(authenticate);
 
 // ***************** cards routes
 
+// ** get card by id  //NEW!
+router.get("/:id", isValidId, cardsController.getCardById);
+
 // ** update card
 router.put(
   "/:id",

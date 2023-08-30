@@ -11,6 +11,13 @@ router.use(authenticate);
 
 // ***************** columns routes
 
+ // ** get all cards for column with id //NEW!
+router.get("/:id/cards", isValidId, columnsController.getAllCards);
+
+// ** get column by id  //NEW!
+router.get("/:id", isValidId, columnsController.getColumnById);
+
+
 // ** update column
 router.patch(
   "/:id",

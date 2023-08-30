@@ -4,6 +4,19 @@ import ctrlWrapper from "../decorators/ctrlWrapper.js";
 
 const ERR_NOT_FOUND = (id) => `Card id=${id} not found`;
 
+// ** get card by Id  NEW!
+const getCardById = async (req, res) => {
+    const { id } = req.params;
+		const result = await Card.findById(
+			id,
+			"-owner -createdAt -updatedAt -__v"
+		);
+		if (!result) {
+			throw HttpError(404, ERR_NOT_FOUND(id));
+		}
+		res.json(result);
+}
+
 // ** update card
 const updateCard = async (req, res) => {
 	const { id } = req.params;
@@ -39,11 +52,11 @@ const moveCard = async (req, res) => {
 		throw HttpError(404, `id=${id}`);
 	}
 	res.json(result);
- // FIXME:
  throw HttpError(404, `TODO: id=${id}`);
 }
 
 export default {
+  getCardById: ctrlWrapper(getCardById),
 	updateCard: ctrlWrapper(updateCard),
 	deleteById: ctrlWrapper(deleteById),
 	moveCard: ctrlWrapper(moveCard),

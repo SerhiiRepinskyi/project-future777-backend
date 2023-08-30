@@ -6,6 +6,41 @@
   Token (приклад):
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWE1YjdiYzBlMWFkODRlOWFhMWU1YiIsImlhdCI6MTY5MzA4MDQ0NCwiZXhwIjoxNjkzMTYzMjQ0fQ.KbGgFrIqGgMiu7tNuYSMh_K_WaRzhL5Sc9td7eeYmQg
 
+***************************
+# ДОДАНО 2023-0829
+
+## отримати всі картки для заданої колонки по id
+Тип запиту:     GET
+Маршрут:        /api/columns/:id/cards
+Реквест Body: -
+Приклад відповіді:
+[
+    {
+        "_id": "64edea6211fbaa9c98a98781",
+        "title": "TEST CARD 1",
+        "description": "string",
+        "priority": 0,
+        "deadline": "2023-09-02T00:00:00.000Z",
+        "owner": "64ede88e11fbaa9c98a9876c",
+        "createdAt": "2023-08-29T12:53:54.595Z",
+        "updatedAt": "2023-08-29T12:57:47.481Z"
+    }
+]
+
+## отримати колонку по id
+Тип запиту:     GET
+Маршрут:        /api/columns/:id
+Реквест Body: -
+Приклад відповіді:
+{
+    "_id": "64ede88e11fbaa9c98a9876c",
+    "title": "TEST COLUMN 1",
+    "cards": [
+        "64edea6211fbaa9c98a98781",
+        "64edea7511fbaa9c98a98786"
+    ]
+}
+*************************
 
 ## видалити колонку за Id
 Тип запиту:     DELETE
