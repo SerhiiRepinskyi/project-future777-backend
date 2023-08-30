@@ -5,14 +5,18 @@ const backgroundSchema = Joi.number().integer().min(0).max(15);
 
 const boardAdd = Joi.object({
 	title: Joi.string().required(),
-	icon: iconSchema.required(),
-	background: backgroundSchema.required(),
+	icon: iconSchema, //TODO: icon: iconSchema.required(),
+	iconId: Joi.string(), //TODO: remove either of icon or iconId
+	background: backgroundSchema, //TODO: .required(),
+	backgroundURL: Joi.string(), //TODO: remove either of background or backgroundURL
 });
 
 const boardUpdate = Joi.object({
 	title: Joi.string(),
 	icon: iconSchema,
+	iconId: Joi.string(), //TODO:
 	background: backgroundSchema,
+	backgroundURL: Joi.string(), //TODO:
 });
 
 const columnSchema = Joi.object({

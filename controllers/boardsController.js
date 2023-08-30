@@ -72,13 +72,18 @@ const updateColumns = async (req, res) => {
  */
 const addColumn = async (req, res) => {
   const { id: owner } = req.params;
-  console.log("owner>>>>>>>>>>>>>>>>>>", owner);
+  const board = await Board.findById(owner);
+  if (!board) {
+    throw HttpError(404, ERR_NOT_FOUND(owner));
+  }
+
+  //console.log("owner>>>>>>>>>>>>>>>>>>", owner);
   const result = await Column.create({ ...req.body, owner });
   if (!result) {
     throw HttpError(404, ERR_NOT_FOUND(id));
   }
   const { _id: columnId, title: columnTitle } = result;
-  const board = await Board.findById(owner);
+
 
   board.columns.push({ columnId, columnTitle });
   await board.save();

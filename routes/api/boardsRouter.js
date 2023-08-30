@@ -15,7 +15,7 @@ router.use(authenticate);
 // ** get list of boards
 router.get("/", boardsController.getAll);
 
-// ** get boards by id
+// ** get board by id
 router.get("/:id", isValidId, boardsController.getById);
 
 // ** delete board by id

@@ -10,13 +10,14 @@ app.use("/api/cards", cardsRouter);
 # get list of boards
 router.get("/", boardsController.getAll);
 
-# get boards by id
+# get board by id
 router.get("/:id", boardsController.getById);
 
 # delete board by id
 router.delete("/:id", boardsController.deleteById);
 
 # add board
+//TODO: UPDATED! to allow iconId and backgroundURL fields
 router.post("/", boardsController.add);
 
 # update board by id (NB! except columns list)
@@ -31,6 +32,12 @@ router.post("/:id/columns",	boardsController.addColumn);
 
 ### routes for "/api/columns" endpoint
 
+# get all cards for column with id
+router.get(/:id/cards, columnsController.getAllCards);    //TODO: NEW!
+
+# get column with id
+router.get(/:id, columnsController.getColumnById);    //TODO: NEW!
+
 # update column
 router.patch("/:id", columnsController.updateColumn);
 
@@ -42,6 +49,9 @@ router.post("/:id/cards", boardsController.addCard);
 
 
 ### routes for "/api/cards" endpoint
+
+# get card by id
+router.get(/:id, cardsController.getCardById);    //TODO: NEW!
 
 #  update card
 router.put("/:id", cardsController.updateCard);
