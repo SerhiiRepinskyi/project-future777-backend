@@ -27,7 +27,7 @@ router.patch(
 );
 
 // ** delete column
-router.delete("/:id", columnsController.deleteById);
+router.delete("/:id", isValidId, columnsController.deleteById);
 
 // ** add card
 router.post(
