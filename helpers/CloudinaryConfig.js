@@ -10,6 +10,21 @@ cloudinary.config({
     api_key:CLOUDINARY_CLOUD_KEY,
     api_secret:CLOUDINARY_CLOUD_SECRET,
 })
+const apiSecret = cloudinary.config().api_secret;
+export const generateCloudinarySignature = () => {
+    const timestamp = Math.round((new Date()).getTime() / 1000);
+    const signature = cloudinary.utils.api_sign_request({
+        folder: 'teamProject/avatar',
+        timestamp: timestamp,
+       
+    },apiSecret);
+
+    return {
+        timestamp,
+        signature
+    }
+};
+
 
 export default cloudinary;
 // завантаження до клауда
