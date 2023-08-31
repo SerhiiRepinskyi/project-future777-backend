@@ -38,9 +38,9 @@ const updateTheme = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-  const { _id } = req.user;
-  const { name, email, password } = req.body;
-
+	// OD:  const { _id } = req.user;
+	const { name, email, password } = req.body;
+	/* OD: the body is already validated by validateBody
   if (!name) {
     throw HttpError(400, "Name is required field");
   }
@@ -49,24 +49,30 @@ const updateUser = async (req, res) => {
   }
   if (!password) {
     throw HttpError(400, "Password is required field");
-  }
+  } */
 
+	/* OD: no need
   const user = await User.findByIdAndUpdate(
     _id,
     { name, email },
     { new: true }
-  );
-  await user.hashPassword(password);
-  await user.save();
-
-  res.json({
-    user: {
-      name: user.name,
-      email: user.email,
-      theme: user.theme,
-      avatarURL: user.avatarURL,
-    },
-  });
+  ); */
+	// OD: moved to middleware pre "save" //await user.hashPassword(password);
+	/* const user = { ...req.user, name, email, password };
+	await user.save(); */
+  req.user.name = name;
+  req.user.email = email;
+  req.user.password = password;
+  await req.user.save();
+  const user = req.user;
+	res.json({
+		user: {
+			name: user.name,
+			email: user.email,
+			theme: user.theme,
+			avatarURL: user.avatarURL,
+		},
+	});
 };
 
 const updateAvatar = async (req, res) => {
