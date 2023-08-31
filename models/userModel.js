@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
-import { handleMongooseError, validateAtUpdate } from "./hooks.js";
+import { handleMongooseError, validateAtUpdate, hashPwd } from "./hooks.js";
 import {
   nameRegexp,
   emailRegexp,
@@ -44,14 +44,15 @@ const userSchema = new Schema(
   { versionKey: false, timestamps: true }
 );
 
-userSchema.methods.hashPassword = async function (password) {
+/* OD: converted to middleware pre "save"
+// userSchema.methods.hashPassword = async function (password) {
   this.password = await bcrypt.hash(password, 10);
-};
+}; */
 
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
-
+userSchema.pre("save", hashPwd); // OD:
 userSchema.pre("findOneAndUpdate", validateAtUpdate);
 
 userSchema.post("save", handleMongooseError);
