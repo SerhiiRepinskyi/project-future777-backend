@@ -1,4 +1,5 @@
 import fs from "fs/promises";
+import generateCloudinarySignature from "../helpers/CloudinaryModule.js";
 
 import User from "../models/userModel.js";
 
@@ -78,10 +79,17 @@ const updateUser = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: filePath } = req.file;
+  
+  const signatureData = generateCloudinarySignature();
+  const apiKEY = cloudinary.config().api_key;
   const fileData = await cloudinary.uploader.upload(filePath, {
     folder: "teamProject/avatar",
+    timestamp: signatureData.timestamp,
+    signature: signatureData.signature, 
+    api_key: apiKEY,
   });
-  console.log(fileData.url);
+ 
+
   await User.findByIdAndUpdate(_id, { avatarURL: fileData.url });
   fs.unlink(filePath);
   res.status(200).json({ avatarURL: fileData.url });
