@@ -61,18 +61,19 @@
 Маршрут:        /api/boards
 Реквест Body:
 {
-  "title":"My board title", "icon":"1", "background":"15", "icon-id": "hexagone"
+  "title":"My board title",  "background":"15", "iconId": "hexagone"
 }
 Приклад відповіді:
 {
     "title": "My board title",
-    "icon": 1,
+    "icon": 0,
+    "iconId": "hexagone",
     "background": 15,
-    "owner": "64ea5b7bc0e1ad84e9aa1e5b",
-    "_id": "64ea78f39f7e49d73cfeeb0e",
+    "owner": "64f0134bdb49898c7ea25dcc",
+    "_id": "64f0ab840d512cdb2e218843",
     "columns": [],
-    "createdAt": "2023-08-26T22:13:07.931Z",
-    "updatedAt": "2023-08-26T22:13:07.931Z"
+    "createdAt": "2023-08-31T15:02:28.529Z",
+    "updatedAt": "2023-08-31T15:02:28.529Z"
 }
 
 ## оновити дошку
@@ -155,11 +156,11 @@
 Приклад відповіді:
 {
     "title": "Column Title 2",
-    "owner": "64ea61aa3ff64045765b1c67",
+    "owner": "64f0ab840d512cdb2e218843",
     "cards": [],
-    "_id": "64ea8f2e01bda25f410bf8dc",
-    "createdAt": "2023-08-26T23:47:58.748Z",
-    "updatedAt": "2023-08-26T23:47:58.748Z"
+    "_id": "64f0ac0b0d512cdb2e218847",
+    "createdAt": "2023-08-31T15:04:43.996Z",
+    "updatedAt": "2023-08-31T15:04:43.996Z"
 }
 
 

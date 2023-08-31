@@ -23,7 +23,7 @@ router.put(
 );
 
 // ** delete card
-router.delete("/:id", cardsController.deleteById);
+router.delete("/:id", isValidId, cardsController.deleteById);
 
 // ** move card
 router.patch(
