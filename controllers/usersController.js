@@ -86,7 +86,7 @@ const updateAvatar = async (req, res) => {
 //  const signature = generateCloudinarySignature()
 //   console.log(signature)
   const fileData = await cloudinary.uploader.upload(filePath, {
-    folder: 'teamProject/avatar',
+    folder: 'teamproject/avatar',
     signature: queryString,
     api_key: api_key,
     timestamp:timestamp,
