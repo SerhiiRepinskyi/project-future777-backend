@@ -79,20 +79,20 @@ const updateUser = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: filePath } = req.file;
+  const timestamp = Math.round((new Date).getTime() / 1000);
+  console.log(timestamp)
   
-  const signatureData = generateCloudinarySignature();
-  const apiKEY = cloudinary.config().api_key;
+ const signature = generateCloudinarySignature()
+  console.log(signature)
   const fileData = await cloudinary.uploader.upload(filePath, {
-    folder: "teamProject/avatar",
-    timestamp: signatureData.timestamp,
-    signature: signatureData.signature, 
-    api_key: apiKEY,
+    folder: 'teamProject/avatar',
   });
- 
-
+  console.log(fileData.signature)
   await User.findByIdAndUpdate(_id, { avatarURL: fileData.url });
   fs.unlink(filePath);
-  res.status(200).json({ avatarURL: fileData.url });
+  
+  res.status(200).json({ avatarURL: fileData.url, signature: fileData.signature });
+  
 };
 
 const needHelp = async (req, res) => {
