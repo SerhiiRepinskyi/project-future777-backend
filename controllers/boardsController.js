@@ -21,6 +21,27 @@ const getById = async (req, res) => {
   }
   res.json(result);
 };
+/*
+const getBoardById = async (req, res) => { //FIXME:
+  const { id } = req.params;
+
+
+  // Query to get all boards with the columns and
+const BoardWithColumns = await Board.findById(id)
+	.populate({
+		path: "columnsList",
+		model: Column,
+		match: { isDeleted: false },
+		populate: {
+			path: "cards",
+      model: Card,
+      match: { isDeleted: false },
+			select: "title description priority deadline ",
+
+		},
+	})
+	.exec();
+}; */
 
 const add = async (req, res) => {
   const { _id: owner } = req.user;

@@ -8,9 +8,15 @@ const ERR_NOT_FOUND = (id) => `Column id=${id} not found`;
 
 // ** get all cards
 const getAllCards = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params;const { f } = req.query;
+  console.log("getAllCards>>>query", req.query, f, typeof f);
+
   const { cards } = await Column.findById(id);
-  const result = await Card.find().where('_id').in(cards).exec();
+  let query = Card.find().where("_id").in(cards);
+  if (!!f) {
+    query = query.where("priority").equals(f);
+  }
+  const result = await query.exec(); //Card.find().where('_id').in(cards).where("priority").equals(f).exec();
   res.json(result);
 };
 

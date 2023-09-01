@@ -13,7 +13,7 @@ router.use(authenticate);
 
  // ** get all cards for column with id //NEW!
 router.get("/:id/cards", isValidId, columnsController.getAllCards);
-
+// get filtered cards "/:id/cards?f=0"
 // ** get column by id  //NEW!
 router.get("/:id", isValidId, columnsController.getColumnById);
 
