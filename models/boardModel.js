@@ -28,6 +28,9 @@ const boardSchema = new Schema(
 			required: true,
 		},
 		columns: [{ columnId: String, columnTitle: String }], // TODO: ids???
+
+		isDeleted: { type: Boolean, default: false },
+		// FIXME: columnsList: {},
 	},
 	{ versionKey: false, timestamps: true }
 );

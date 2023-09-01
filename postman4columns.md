@@ -16,14 +16,52 @@
 Приклад відповіді:
 [
     {
-        "_id": "64edea6211fbaa9c98a98781",
-        "title": "TEST CARD 1",
-        "description": "string",
-        "priority": 0,
-        "deadline": "2023-09-02T00:00:00.000Z",
-        "owner": "64ede88e11fbaa9c98a9876c",
-        "createdAt": "2023-08-29T12:53:54.595Z",
-        "updatedAt": "2023-08-29T12:57:47.481Z"
+        "_id": "64f23b7bc0609c780aa297ba",
+        "title": "Card Title 1",
+        "description": "It is a test card",
+        "priority": 1,
+        "deadline": "2023-09-27T00:00:00.000Z",
+        "owner": "64f23ab8c0609c780aa297a8",
+        "createdAt": "2023-09-01T19:28:59.167Z",
+        "updatedAt": "2023-09-01T19:28:59.167Z"
+    },
+    {
+        "_id": "64f23bcac0609c780aa297bf",
+        "title": "Card Title 2",
+        "description": "It is a test card",
+        "priority": 2,
+        "deadline": "2023-09-27T00:00:00.000Z",
+        "owner": "64f23ab8c0609c780aa297a8",
+        "createdAt": "2023-09-01T19:30:18.536Z",
+        "updatedAt": "2023-09-01T19:30:18.536Z"
+    },
+    {
+        "_id": "64f23bd7c0609c780aa297c4",
+        "title": "Card Title 3",
+        "description": "It is a test card",
+        "priority": 3,
+        "deadline": "2023-09-27T00:00:00.000Z",
+        "owner": "64f23ab8c0609c780aa297a8",
+        "createdAt": "2023-09-01T19:30:31.991Z",
+        "updatedAt": "2023-09-01T19:30:31.991Z"
+    }
+]
+# ДОДАНО 2023-0901
+# отримати всі картки для заданої колонки по id з фільрацією по пріоритету
+Тип запиту:     GET
+Маршрут:        /api/columns/:id/cards?f=2
+Реквест Body: -
+Приклад відповіді:
+[
+    {
+        "_id": "64f23bcac0609c780aa297bf",
+        "title": "Card Title 2",
+        "description": "It is a test card",
+        "priority": 2,
+        "deadline": "2023-09-27T00:00:00.000Z",
+        "owner": "64f23ab8c0609c780aa297a8",
+        "createdAt": "2023-09-01T19:30:18.536Z",
+        "updatedAt": "2023-09-01T19:30:18.536Z"
     }
 ]
 
