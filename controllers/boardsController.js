@@ -35,18 +35,20 @@ const getContent = async (req, res) => { //FIXME:
   const matchCard = { isDeleted: false };
   if (!!priority) matchCard.priority = priority;
 
-  const contentQuery = Board.findById(id, "content").lean().populate({
-		path: "content",
-		model: Column,
-		match: { isDeleted: false },
-		select: "title _id cards",
-		populate: {
-			path: "cards",
-			model: Card,
-			match: matchCard,
-			select: "title description priority deadline _id",
-		},
-	});
+  const contentQuery = Board.findById(id, "title content background iconId")
+		.lean()
+		.populate({
+			path: "content",
+			model: Column,
+			match: { isDeleted: false },
+			select: "title _id cards",
+			populate: {
+				path: "cards",
+				model: Card,
+				match: matchCard,
+				select: "title description priority deadline _id",
+			},
+		});
   // Query to get all boards with the columns and
   const content = await contentQuery.exec();
 

@@ -16,11 +16,28 @@
 Приклад відповіді:
 {
     "_id": "64f277b6144dd16a62e5ae74",
+    "title": "Olga's second board title",
+    "iconId": "puzzle",
+    "background": 0,
     "content": [
         {
             "_id": "64f27866144dd16a62e5ae78",
             "title": "Column Title 1",
             "cards": [
+                {
+                    "_id": "64f27939144dd16a62e5ae94",
+                    "title": "Card Title 1",
+                    "description": "It is a test card",
+                    "priority": 1,
+                    "deadline": "2023-09-27T00:00:00.000Z"
+                },
+                {
+                    "_id": "64f27947144dd16a62e5ae9a",
+                    "title": "Card Title 2",
+                    "description": "It is a test card",
+                    "priority": 2,
+                    "deadline": "2023-09-27T00:00:00.000Z"
+                },
                 {
                     "_id": "64f27956144dd16a62e5ae9f",
                     "title": "Card Title 3",
@@ -49,7 +66,6 @@
         }
     ]
 }
-
 
 ***************************
 # ДОДАНО 2023-0829 - додаткові поля (iconId і backgroundURL) типу string для створення і оновлення дошки
