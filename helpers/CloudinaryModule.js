@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-// import "dotenv/config"; // SV: достатньо викликати один раз; викликається в server.js
+import "dotenv/config";
 
 const apiSecret = cloudinary.config().api_secret;
 

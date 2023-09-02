@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
-// import "dotenv/config"; // SV: достатньо викликати один раз; викликається в server.js
+import "dotenv/config";
 
 const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_CLOUD_KEY, CLOUDINARY_CLOUD_SECRET } =
   process.env;
