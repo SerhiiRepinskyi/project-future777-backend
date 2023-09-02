@@ -8,12 +8,19 @@ import usersSchemas from "../../schemas/userSchemas.js";
 
 import authenticate from "../../middlewares/authenticate.js";
 
+
 const authRouter = express.Router();
 
 authRouter.post(
   "/register",
   validateBody(usersSchemas.userRegisterSchema),
   authCtrl.registerUser
+);
+
+authRouter.post(
+  "/google",
+  validateBody(usersSchemas.userLoginGoogleSchema),
+  authCtrl.loginGoogleUser
 );
 
 authRouter.post(

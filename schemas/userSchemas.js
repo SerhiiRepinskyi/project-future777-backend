@@ -42,6 +42,18 @@ const userLoginSchema = Joi.object({
     }),
 });
 
+const userLoginGoogleSchema = Joi.object({
+  name: Joi.string().min(2).max(32).pattern(nameRegexp).required().messages({
+    "any.required": "missing required name field",
+    "string.empty": "name cannot be empty",
+  }),
+  email: Joi.string().pattern(emailRegexp).required().messages({
+    "any.required": "missing required email field",
+    "string.empty": "email cannot be empty",
+  })
+});
+
+
 const userUpdateThemeSchema = Joi.object({
   theme: Joi.string()
     .valid(...themeList)
@@ -62,6 +74,7 @@ const needHelpSchema = Joi.object({
 export default {
   userRegisterSchema,
   userLoginSchema,
+  userLoginGoogleSchema,
   userUpdateThemeSchema,
   needHelpSchema,
 };
