@@ -18,13 +18,16 @@ router.get("/", boardsController.getAll);
 // ** get board by id
 router.get("/:id", isValidId, boardsController.getById);
 
+// ** get board content by id
+router.get("/:id/content", isValidId, boardsController.getContent);
+
 // ** delete board by id
 router.delete("/:id", isValidId, boardsController.deleteById);
 
 // ** add board
 router.post("/", validateBody(boardsSchemas.boardAdd), boardsController.add);
 
-// ** update board by id (NB! except columns list)
+// ** update board by id (NB! except columnsList)
 router.patch(
   "/:id",
   //TODO: isEmptyBody,
@@ -33,7 +36,7 @@ router.patch(
   boardsController.updateById
 );
 
-// ** update board by id - only columns list) // TODO: only for drag-n-drop
+// ** update board by id - only columnsList) // TODO: only for drag-n-drop
 router.patch(
   "/:id/columns",
   isValidId,

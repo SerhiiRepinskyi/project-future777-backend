@@ -23,9 +23,10 @@ const columnSchema = Joi.object({
 	title: Joi.string().required(),
 });
 
-// update columns list // TODO: only for drag-n-drop
+// update columnsList // TODO: only for drag-n-drop
 const boardUpdateColumns = Joi.object({
-	columns: Joi.array().items(columnSchema).required(),
+	columns: Joi.array().items(columnSchema).required(), //FIXME:
+	content: Joi.array().items(columnSchema).required(),
 });
 
 const prioritySchema = Joi.number().integer().min(0).max(3);

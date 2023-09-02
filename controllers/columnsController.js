@@ -8,9 +8,15 @@ const ERR_NOT_FOUND = (id) => `Column id=${id} not found`;
 
 // ** get all cards
 const getAllCards = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params;const { f } = req.query;
+  console.log("getAllCards>>>query", req.query, f, typeof f);
+
   const { cards } = await Column.findById(id);
-  const result = await Card.find().where('_id').in(cards).exec();
+  let query = Card.find().where("_id").in(cards);
+  if (!!f) {
+    query = query.where("priority").equals(f);
+  }
+  const result = await query.exec(); //Card.find().where('_id').in(cards).where("priority").equals(f).exec();
   res.json(result);
 };
 
@@ -43,10 +49,10 @@ const deleteById = async (req, res) => {
 	}
 	const { owner } = result;
 	/* const board = await Board.findById(owner);
-	if (board.columns.length > 0) {
-		console.log("board.columns.length>>", board.columns.length);
+	if (board.colu mns.length > 0) {
+		console.log("board.colum ns.length>>", board.colu mns.length);
 		const isColumnId = (item) => item.columnId === id;
-		const ind = board.columns.findIndex(isColumnId);
+		const ind = board.colu mns.findIndex(isColumnId);
 		if (ind >= 0) {
 			await board.save();
 		} else {

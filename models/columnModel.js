@@ -12,7 +12,7 @@ const columnSchema = new Schema(
       ref: "board", // collection name
       required: true,
     },
-    cards: [Schema.Types.ObjectId], // TODO: if needed?
+    cards: [{type: Schema.Types.ObjectId, ref:"card"}], 
   },
   { versionKey: false, timestamps: true }
 );

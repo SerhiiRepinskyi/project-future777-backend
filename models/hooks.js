@@ -15,14 +15,13 @@ export const validateAtUpdate = function (next) {
   see a very good explanation here:
   https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
   */
-export async function hashPwd(next) { 
+export async function hashPwd(next) {
   const user = this;
 
   // only hash the password if it has been modified (or is new)
-  if (!user.isModified('password')) return next();
+  if (!user.isModified("password")) return next();
 
   user.password = await bcrypt.hash(user.password, 10);
 
   next();
 }
-

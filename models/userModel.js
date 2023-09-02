@@ -52,6 +52,7 @@ const userSchema = new Schema(
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
+
 userSchema.pre("save", hashPwd); // OD:
 userSchema.pre("findOneAndUpdate", validateAtUpdate);
 
