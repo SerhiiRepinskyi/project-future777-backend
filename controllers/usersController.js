@@ -80,7 +80,6 @@ const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: filePath } = req.file;
   const timestamp = Math.round((new Date).getTime() / 1000);
-
   const fileData = await cloudinary.uploader.upload(filePath, {
     folder: 'teamproject/avatar',
     timestamp: timestamp
