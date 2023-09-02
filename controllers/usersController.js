@@ -39,58 +39,55 @@ const updateTheme = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-	// OD:  const { _id } = req.user;
-	const { name, email, password } = req.body;
-	/* OD: the body is already validated by validateBody
-  if (!name) {
-    throw HttpError(400, "Name is required field");
-  }
-  if (!email) {
-    throw HttpError(400, "Email is required field");
-  }
-  if (!password) {
-    throw HttpError(400, "Password is required field");
-  } */
+  // OD:  const { _id } = req.user;
+  const { name, email, password } = req.body;
 
-	/* OD: no need
+  /* OD: no need
   const user = await User.findByIdAndUpdate(
     _id,
     { name, email },
     { new: true }
   ); */
-	// OD: moved to middleware pre "save" //await user.hashPassword(password);
-	/* const user = { ...req.user, name, email, password };
+
+  // OD: moved to middleware pre "save" // await user.hashPassword(password);
+  /* const user = { ...req.user, name, email, password };
 	await user.save(); */
+
   req.user.name = name;
   req.user.email = email;
   req.user.password = password;
   await req.user.save();
+
   const user = req.user;
-	res.json({
-		user: {
-			name: user.name,
-			email: user.email,
-			theme: user.theme,
-			avatarURL: user.avatarURL,
-		},
-	});
+
+  res.json({
+    user: {
+      name: user.name,
+      email: user.email,
+      theme: user.theme,
+      avatarURL: user.avatarURL,
+    },
+  });
 };
 
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: filePath } = req.file;
-  const timestamp = Math.round((new Date).getTime() / 1000);
+  const timestamp = Math.round(new Date().getTime() / 1000);
 
   const fileData = await cloudinary.uploader.upload(filePath, {
-    folder: 'teamproject/avatar',
-    timestamp: timestamp
+    folder: "teamproject/avatar",
+    timestamp: timestamp,
   });
-  console.log(fileData.signature)
+  console.log(fileData.signature);
+
   await User.findByIdAndUpdate(_id, { avatarURL: fileData.url });
+
   fs.unlink(filePath);
-  
-  res.status(200).json({ avatarURL: fileData.url, signature: fileData.signature });
-  
+
+  res
+    .status(200)
+    .json({ avatarURL: fileData.url, signature: fileData.signature });
 };
 
 const needHelp = async (req, res) => {
