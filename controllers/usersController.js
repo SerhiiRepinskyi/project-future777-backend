@@ -1,5 +1,4 @@
 import fs from "fs/promises";
-import generateCloudinarySignature from "../helpers/CloudinaryModule.js";
 
 import User from "../models/userModel.js";
 
