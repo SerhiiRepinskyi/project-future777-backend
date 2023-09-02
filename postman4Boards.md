@@ -7,7 +7,7 @@
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWE1YjdiYzBlMWFkODRlOWFhMWU1YiIsImlhdCI6MTY5MzA4MDQ0NCwiZXhwIjoxNjkzMTYzMjQ0fQ.KbGgFrIqGgMiu7tNuYSMh_K_WaRzhL5Sc9td7eeYmQg
 
 ***************************
-# ДОДАНО 2023-09-03 - отримання по id дошки її вмісту(масив колонок з вкладеними масивами карток), з можливістю фільтрувати картки по пріорітету
+# ДОДАНО 2023-09-02 - отримання по id дошки її вмісту(масив колонок з вкладеними масивами карток), з можливістю фільтрувати картки по пріорітету
 
 Тип запиту:     GET
 Маршрут:        /api/boards/:id/content
