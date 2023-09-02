@@ -49,10 +49,10 @@ const deleteById = async (req, res) => {
 	}
 	const { owner } = result;
 	/* const board = await Board.findById(owner);
-	if (board.columns.length > 0) {
-		console.log("board.columns.length>>", board.columns.length);
+	if (board.colu mns.length > 0) {
+		console.log("board.colum ns.length>>", board.colu mns.length);
 		const isColumnId = (item) => item.columnId === id;
-		const ind = board.columns.findIndex(isColumnId);
+		const ind = board.colu mns.findIndex(isColumnId);
 		if (ind >= 0) {
 			await board.save();
 		} else {
