@@ -27,10 +27,10 @@ const boardSchema = new Schema(
 			ref: "user", // collection name
 			required: true,
 		},
-		columns: [{ columnId: String, columnTitle: String }], // TODO: ids???
+		columns: [{ columnId: String, columnTitle: String }], //TODO: remove
+		content: [{ type: Schema.Types.ObjectId, ref: "card" }], // FIXME:
 
 		isDeleted: { type: Boolean, default: false },
-		// FIXME: columnsList: {},
 	},
 	{ versionKey: false, timestamps: true }
 );

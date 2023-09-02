@@ -7,6 +7,51 @@
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWE1YjdiYzBlMWFkODRlOWFhMWU1YiIsImlhdCI6MTY5MzA4MDQ0NCwiZXhwIjoxNjkzMTYzMjQ0fQ.KbGgFrIqGgMiu7tNuYSMh_K_WaRzhL5Sc9td7eeYmQg
 
 ***************************
+# ДОДАНО 2023-09-03 - отримання по id дошки її вмісту(масив колонок з вкладеними масивами карток), з можливістю фільтрувати картки по пріорітету
+
+Тип запиту:     GET
+Маршрут:        /api/boards/:id/content
+Приклад маршруту з фільтрацією: api/boards/64f277b6144dd16a62e5ae74/content?priority=3
+Реквест Body: -
+Приклад відповіді:
+{
+    "_id": "64f277b6144dd16a62e5ae74",
+    "content": [
+        {
+            "_id": "64f27866144dd16a62e5ae78",
+            "title": "Column Title 1",
+            "cards": [
+                {
+                    "_id": "64f27956144dd16a62e5ae9f",
+                    "title": "Card Title 3",
+                    "description": "It is a test card",
+                    "priority": 3,
+                    "deadline": "2023-09-27T00:00:00.000Z"
+                },
+                {
+                    "_id": "64f27966144dd16a62e5aea4",
+                    "title": "Card Title 31",
+                    "description": "It is a test card",
+                    "priority": 3,
+                    "deadline": "2023-09-27T00:00:00.000Z"
+                }
+            ]
+        },
+        {
+            "_id": "64f27870144dd16a62e5ae7f",
+            "title": "Column Title 2",
+            "cards": []
+        },
+        {
+            "_id": "64f27876144dd16a62e5ae87",
+            "title": "Column Title 3",
+            "cards": []
+        }
+    ]
+}
+
+
+***************************
 # ДОДАНО 2023-0829 - додаткові поля (iconId і backgroundURL) типу string для створення і оновлення дошки
 
 ## створити дошку

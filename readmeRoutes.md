@@ -7,6 +7,10 @@ app.use("/api/cards", cardsRouter);
 
 ## routes for "/api/boards" endpoint
 
+# get all columns/cards with optional filter by priority (ДОДАНО 2023-09-02)
+router.get(/:id/columns, boardsController.getContent);
+router.get(/:id/columns?priority=2, boardsController.getContent);
+
 # get list of boards
 router.get("/", boardsController.getAll);
 
@@ -33,10 +37,12 @@ router.post("/:id/columns",	boardsController.addColumn);
 ### routes for "/api/columns" endpoint
 
 # get all cards for column with id
-router.get(/:id/cards, columnsController.getAllCards);    //TODO: NEW!
+router.get(/:id/cards, columnsController.getAllCards);
+# get all cards for column(filtered by priority) NEW!
+router.get(/:id/cards?f=2, columnsController.getAllCards);
 
 # get column with id
-router.get(/:id, columnsController.getColumnById);    //TODO: NEW!
+router.get(/:id, columnsController.getColumnById);
 
 # update column
 router.patch("/:id", columnsController.updateColumn);
@@ -51,7 +57,7 @@ router.post("/:id/cards", boardsController.addCard);
 ### routes for "/api/cards" endpoint
 
 # get card by id
-router.get(/:id, cardsController.getCardById);    //TODO: NEW!
+router.get(/:id, cardsController.getCardById);
 
 #  update card
 router.put("/:id", cardsController.updateCard);
