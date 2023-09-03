@@ -7,10 +7,10 @@ const boardSchema = new Schema(
 			type: String,
 			required: [true, "Board title is missing"],
 		},
-		icon: {
+/* 		icon: {
 			type: Number, // 0..7
 			default: 0,
-		},
+		}, */
 		iconId: {
 			type: String, //any, there is no validation //TODO: remove either icon or iconId
 		},
@@ -18,10 +18,10 @@ const boardSchema = new Schema(
 			type: Number, // 0 of 15 (0=none),
 			default: 0,
 		},
-		backgroundURL: {
+/* 		backgroundURL: {
 			//TODO: remove either of background or backgroundURL
 			type: String,
-		},
+		}, */
 		owner: {
 			type: Schema.Types.ObjectId,
 			ref: "user", // collection name
