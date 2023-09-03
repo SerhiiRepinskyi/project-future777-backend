@@ -22,7 +22,7 @@ usersRouter.patch(
 
 usersRouter.patch(
   "/",
-  validateBody(usersSchemas.userRegisterSchema),
+  validateBody(usersSchemas.userEditDataSchema),
   usersCtrl.updateUser
 );
 

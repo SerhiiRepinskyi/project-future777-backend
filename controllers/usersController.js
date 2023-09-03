@@ -54,7 +54,12 @@ const updateUser = async (req, res) => {
 
   req.user.name = name;
   req.user.email = email;
-  req.user.password = password;
+
+  // req.user.password = password; // SV: for the case when a password is required
+  if (password) {
+    req.user.password = password;
+  }
+
   await req.user.save();
 
   const user = req.user;
