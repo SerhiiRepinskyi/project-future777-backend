@@ -15,24 +15,35 @@
 Реквест Body: -
 Приклад відповіді:
 {
-    "title": "TEST CARD 2",
-    "description": "it is a description of test card 2",
-    "priority": 1,
-    "deadline": "2023-09-02T00:00:00.000Z",
-    "owner": "64eacc9f4040dd4d17e3e96f",
-    "_id": "64eebfb62f3361d862fd9623",
-    "createdAt": "2023-08-30T04:04:06.925Z",
-    "updatedAt": "2023-08-30T04:04:06.925Z"
+    "_id": "64f55b01968260dc14563eaa",
+    "title": "Card Title 3",
+    "description": "It is a test card",
+    "priority": 3,
+    "deadline": "2023-09-27T00:00:00.000Z",
+    "owner": "64f55844968260dc14563e82"
 }
+
 *************************
 
-## видалити колонку за Id
+## видалити картку за Id
 Тип запиту:     DELETE
 Маршрут:        /api/cards/:id
 Реквест Body: -
 Приклад відповіді:
 {
-    "message": "Column deleted (FIXME: delete from owner's list)"
+    "message": "Card id=64f55b36968260dc14563eaf is deleted and removed from owner's list"
+}
+
+## перемістити картку в іншу колонку
+Тип запиту:     PATCH
+Маршрут:        /api/cards/:id
+Реквест Body:
+{
+    "newOwnerId": "64f5586c968260dc14563e8d"
+}
+Приклад відповіді:
+{
+    "message": "Card moved"
 }
 
 ## оновити картку
@@ -40,11 +51,20 @@
 Маршрут:        /api/cards/:id
 Реквест Body:
 {
-
+    "title": "Card Title UPDATED",
+    "description": "It is a test card",
+    "priority": 3,
+    "deadline": "2023-09-09"
 }
 Приклад відповіді:
 {
-
+    "_id": "64f55b01968260dc14563eaa",
+    "title": "Card Title UPDATED",
+    "description": "It is a test card",
+    "priority": 3,
+    "deadline": "2023-09-09T00:00:00.000Z",
+    "owner": "64f55844968260dc14563e82",
+    "createdAt": "2023-09-04T04:20:17.120Z",
+    "updatedAt": "2023-09-04T04:35:23.390Z"
 }
-
 

@@ -1,36 +1,38 @@
 import { Schema, model } from "mongoose";
 import { handleMongooseError, validateAtUpdate } from "./hooks.js";
-
-const boardSchema = new Schema(
-	{
-		title: {
-			type: String,
-			required: [true, "Board title is missing"],
-		},
-/* 		icon: {
+/*
+ //TODO: removed
+  icon: {
 			type: Number, // 0..7
 			default: 0,
-		}, */
-		iconId: {
-			type: String, //any, there is no validation //TODO: remove either icon or iconId
 		},
-		background: {
-			type: Number, // 0 of 15 (0=none),
-			default: 0,
-		},
-/* 		backgroundURL: {
-			//TODO: remove either of background or backgroundURL
+    backgroundURL: {
 			type: String,
-		}, */
-		owner: {
-			type: Schema.Types.ObjectId,
-			ref: "user", // collection name
-			required: true,
 		},
-		columns: [{ columnId: String, columnTitle: String }], //TODO: remove
-		content: [{ type: Schema.Types.ObjectId, ref: "card" }], // FIXME:
+    columns: [{ columnId: String, columnTitle: String }],
+   */
+const boardSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Board title is missing"],
+    },
+    iconId: {
+      type: String, //just not empty
+    },
+    background: {
+      type: Number, // 0 of 15 (0=none),
+      default: 0,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "user", // collection name
+      required: true,
+    },
 
-		isDeleted: { type: Boolean, default: false },
+    content: [{ type: Schema.Types.ObjectId, ref: "column" }], // "card" }], //FIXME: ???
+
+		// TODO:  for future // isDeleted: { type: Boolean, default: false },
 	},
 	{ versionKey: false, timestamps: true }
 );
@@ -47,6 +49,6 @@ boardSchema.post("findOneAndDelete", handleMongooseError);
 const Board = model("board", boardSchema);
 
 export default Board;
-
+//TODO: add validation? i dont see any sense as we dont own the icons resource
 // "icon-hexagon","icon-lightning", "icon-loading", "icon-Project",
 // "icon-puzzle","icon-star", "icon-colors", "icon-container"

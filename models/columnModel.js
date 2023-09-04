@@ -2,19 +2,20 @@ import { Schema, model } from "mongoose";
 import { handleMongooseError, validateAtUpdate } from "./hooks.js";
 
 const columnSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-    },
-    owner: {
-      type: Schema.Types.ObjectId,
-      ref: "board", // collection name
-      required: true,
-    },
-    cards: [{type: Schema.Types.ObjectId, ref:"card"}], 
-  },
-  { versionKey: false, timestamps: true }
+	{
+		title: {
+			type: String,
+			required: true,
+		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "board", // collection name
+			required: true,
+		},
+		cards: [{ type: Schema.Types.ObjectId, ref: "card" }],
+		// TODO: for future // isDeleted: { type: Boolean, default: false },
+	},
+	{ versionKey: false, timestamps: true }
 );
 
 // to validate before update
