@@ -7,9 +7,9 @@
     eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZWE1YjdiYzBlMWFkODRlOWFhMWU1YiIsImlhdCI6MTY5MzA4MDQ0NCwiZXhwIjoxNjkzMTYzMjQ0fQ.KbGgFrIqGgMiu7tNuYSMh_K_WaRzhL5Sc9td7eeYmQg
 
 ***************************
-# ДОДАНО 2023-0829
 
 ## отримати всі картки для заданої колонки по id
+// TODO: Check if needed
 Тип запиту:     GET
 Маршрут:        /api/columns/:id/cards
 Реквест Body: -
@@ -46,8 +46,9 @@
         "updatedAt": "2023-09-01T19:30:31.991Z"
     }
 ]
-# ДОДАНО 2023-0901
+
 # отримати всі картки для заданої колонки по id з фільnрацією по пріоритету
+// TODO: Check if needed (change to priority)
 Тип запиту:     GET
 Маршрут:        /api/columns/:id/cards?f=2
 Реквест Body: -
@@ -86,7 +87,7 @@
 Реквест Body: -
 Приклад відповіді:
 {
-    "message": "Column deleted( FIXME: delete all its cards)"
+    "message": "Column id=64f55844968260dc14563e82 and its cards are deleted and removed from owner's list"
 }
 
 ## оновити колонку
@@ -116,14 +117,14 @@
    "title":"Card Title 2 Ok",
    "description":"It is a test card",
    "priority": "1",
-   "deadline": "2023-08-27"
+   "deadline": "2023-09-27"
 }
 Приклад відповіді:
 {
     "title": "Card Title 2 Ok",
     "description": "It is a test card",
     "priority": 1,
-    "deadline": "2023-08-27T00:00:00.000Z",
+    "deadline": "2023-09-27T00:00:00.000Z",
     "owner": "64eaae0d024b62561d1b830d",
     "_id": "64eabd636f886828c6573a0f",
     "createdAt": "2023-08-27T03:05:07.967Z",

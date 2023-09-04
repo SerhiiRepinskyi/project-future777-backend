@@ -1,12 +1,13 @@
 import Card from "../models/cardModel.js";
-//import Board from "../models/boardModel.js";
+import Board from "../models/boardModel.js";
 import Column from "../models/columnModel.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
+import { deleteColumn } from "./helper.js";
 
-const ERR_NOT_FOUND = (id) => `Column id=${id} not found`;
+const COLUMN_NOT_FOUND = (id) => `Column id=${id} not found`;
 
-// ** get all cards
+// ** get all cards // TODO: to remove??? no need ???
 const getAllCards = async (req, res) => {
   const { id } = req.params;const { f } = req.query;
   console.log("getAllCards>>>query", req.query, f, typeof f);
@@ -25,7 +26,7 @@ const getColumnById = async (req, res) => {
 	const { id } = req.params;
 	const result = await Column.findById(id, "-owner -createdAt -updatedAt -__v");
 	if (!result) {
-		throw HttpError(404, ERR_NOT_FOUND(id));
+		throw HttpError(404, COLUMN_NOT_FOUND(id));
 	}
 	res.json(result);
 };
@@ -35,34 +36,20 @@ const updateColumn = async (req, res) => {
 	const { id } = req.params;
 	const result = await Column.findByIdAndUpdate(id, req.body, { new: true }); // =return updated
 	if (!result) {
-		throw HttpError(404, ERR_NOT_FOUND(id));
+		throw HttpError(404, COLUMN_NOT_FOUND(id));
 	}
 	res.json(result);
 };
 
 // ** delete column
 const deleteById = async (req, res) => {
-	const { id } = req.params;
-	const result = await Column.findByIdAndDelete(id);
-  if (!result) {
-    throw HttpError(404, ERR_NOT_FOUND(id));
+		const { id } = req.params;
+  const result = await deleteColumn(id, false);
+  if (result) {
+    res.json({ message: `Column id=${id} and its cards are deleted and removed from owner's list` });
+  } else {
+		throw HttpError(404, COLUMN_NOT_FOUND(id));
 	}
-	const { owner } = result;
-	/* const board = await Board.findById(owner);
-	if (board.colu mns.length > 0) {
-		console.log("board.colum ns.length>>", board.colu mns.length);
-		const isColumnId = (item) => item.columnId === id;
-		const ind = board.colu mns.findIndex(isColumnId);
-		if (ind >= 0) {
-			await board.save();
-		} else {
-			throw HttpError(404, `ERR_DEV: id=${board._id}`);
-		}
-	} */
-	res.json({
-		message:
-			"Column deleted( FIXME: delete all its cards, and from owner's list)",
-	});
 };
 
 /**
@@ -72,7 +59,7 @@ const updateCards = async (req, res) => {
 	const { id } = req.params;
 	const result = await Column.findByIdAndUpdate(id, req.body, { new: true });
 	if (!result) {
-		throw HttpError(404, ERR_NOT_FOUND(id));
+		throw HttpError(404, COLUMN_NOT_FOUND(id));
 	}
 	res.json(result);
 };
@@ -83,12 +70,12 @@ const addCard = async (req, res) => {
 	const { id: owner } = req.params;
 	const column = await Column.findById(owner);
 	if (!column) {
-		throw HttpError(404, ERR_NOT_FOUND(owner));
+		throw HttpError(404, COLUMN_NOT_FOUND(owner));
 	}
 
 	const result = await Card.create({ ...req.body, owner });
 	if (!result) {
-		throw HttpError(404, ERR_NOT_FOUND(id));
+		throw HttpError(404, COLUMN_NOT_FOUND(id));
 	}
 
 	//add  to the cards list
@@ -98,8 +85,8 @@ const addCard = async (req, res) => {
 };
 
 export default {
-  getAllCards: ctrlWrapper(getAllCards), //NEW!
-  getColumnById: ctrlWrapper(getColumnById), //NEW!
+  getAllCards: ctrlWrapper(getAllCards), // TODO: no need???
+  getColumnById: ctrlWrapper(getColumnById),
 	updateColumn: ctrlWrapper(updateColumn),
 	deleteById: ctrlWrapper(deleteById), //FIXME: delete all from cards list
 	updateCards: ctrlWrapper(updateCards), // TODO: only for drag-n-drop

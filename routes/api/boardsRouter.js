@@ -12,10 +12,12 @@ router.use(authenticate);
 
 // ***************** boards routes
 
-// ** get list of boards
+// ** get list of boards of the current user
 router.get("/", boardsController.getAll);
 
 // ** get board by id
+//    may include fields parameter like "?fields=iconId title"
+//    then returns specified fields, otherwise "title iconId background" fields
 router.get("/:id", isValidId, boardsController.getById);
 
 // ** get board content by id
@@ -24,7 +26,7 @@ router.get("/:id/content", isValidId, boardsController.getContent);
 // ** delete board by id
 router.delete("/:id", isValidId, boardsController.deleteById);
 
-// ** add board
+// ** add board for the current user
 router.post("/", validateBody(boardsSchemas.boardAdd), boardsController.add);
 
 // ** update board by id (NB! except columnsList)

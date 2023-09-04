@@ -68,29 +68,26 @@
 }
 
 ***************************
-# ДОДАНО 2023-0829 - додаткові поля (iconId і backgroundURL) типу string для створення і оновлення дошки
 
 ## створити дошку
 Тип запиту:     POST
 Маршрут:        /api/boards
 Реквест Body:
 {
-  "title":"My board title ",
+  "title":"Olga board title 1",
   "iconId":"test-icon-id",
-  "backgroundURL":"test background URL"
+  "background":"0"
 }
 Приклад відповіді:
 {
-    "title": "My board title ",
-    "icon": 0,
+    "title": "Olga board title 1",
     "iconId": "test-icon-id",
     "background": 0,
-    "backgroundURL": "test background URL",
-    "owner": "64eeb060ed79201d44f957af",
-    "_id": "64eec17a2f3361d862fd9627",
-    "columns": [],
-    "createdAt": "2023-08-30T04:11:38.117Z",
-    "updatedAt": "2023-08-30T04:11:38.117Z"
+    "owner": "64f13004cfaa9278e2244c98",
+    "content": [],
+    "_id": "64f555d1968260dc14563e74",
+    "createdAt": "2023-09-04T03:58:09.773Z",
+    "updatedAt": "2023-09-04T03:58:09.773Z"
 }
 
 ## оновити дошку
@@ -98,63 +95,22 @@
 Маршрут:        /api/boards/:id
 Реквест Body:
 {
-   "iconId":"UPDATED test-icon-id", "backgroundURL":"UPDATED test background URL"
+  "title":"Olga board title PATCHED",
+  "background":"15"
 }
 Приклад відповіді:
 {
-    "_id": "64eec17a2f3361d862fd9627",
-    "title": "My board title ",
-    "icon": 0,
-    "iconId": "UPDATED test-icon-id",
-    "background": 0,
-    "backgroundURL": "UPDATED test background URL",
-    "owner": "64eeb060ed79201d44f957af",
-    "columns": [],
-    "createdAt": "2023-08-30T04:11:38.117Z",
-    "updatedAt": "2023-08-30T04:13:15.363Z"
+    "_id": "64f555d1968260dc14563e74",
+    "title": "Olga board title PATCHED",
+    "iconId": "test-icon-id",
+    "background": 15,
+    "owner": "64f13004cfaa9278e2244c98",
+    "content": [],
+    "createdAt": "2023-09-04T03:58:09.773Z",
+    "updatedAt": "2023-09-04T04:01:36.306Z"
 }
 
 ***************************
-
-
-## створити дошку
-Тип запиту:     POST
-Маршрут:        /api/boards
-Реквест Body:
-{
-  "title":"My board title",  "background":"15", "iconId": "hexagone"
-}
-Приклад відповіді:
-{
-    "title": "My board title",
-    "icon": 0,
-    "iconId": "hexagone",
-    "background": 15,
-    "owner": "64f0134bdb49898c7ea25dcc",
-    "_id": "64f0ab840d512cdb2e218843",
-    "columns": [],
-    "createdAt": "2023-08-31T15:02:28.529Z",
-    "updatedAt": "2023-08-31T15:02:28.529Z"
-}
-
-## оновити дошку
-Тип запиту:     PATCH
-Маршрут:        /api/boards/:id
-Реквест Body:
-{
-   "title":"My board UPDATED", "icon":"7"
-}
-Приклад відповіді:
-{
-    "_id": "64ea78f39f7e49d73cfeeb0e",
-    "title": "My board UPDATED",
-    "icon": 7,
-    "background": 15,
-    "owner": "64ea5b7bc0e1ad84e9aa1e5b",
-    "columns": [],
-    "createdAt": "2023-08-26T22:13:07.931Z",
-    "updatedAt": "2023-08-26T22:21:20.379Z"
-}
 
 ## отримати всі дошки залогіненого юзера
 Тип запиту:     GET
@@ -163,48 +119,42 @@
 Приклад відповіді:
 [
     {
-        "_id": "64ea61aa3ff64045765b1c67",
-        "title": "My board title 3",
-        "icon": 3,
-        "background": 13,
-        "columns": []
-    },
-    {
-        "_id": "64ea62d122baaeef7d671480",
-        "title": "My board title (updated)",
-        "icon": 7,
-        "background": 0,
-        "columns": []
+        "_id": "64f555d1968260dc14563e74",
+        "title": "Olga board title PATCHED",
+        "iconId": "test-icon-id",
+        "background": 15
     }
 ]
 
 ## отримати дошку за Id
 Тип запиту:   GET
 Маршрут:      /api/boards/:id
-              (наприклад, /api/boards/64ea61aa3ff64045765b1c67)
+              (наприклад, /api/boards/:id)
+NB! може включати fields параметр, наприклад,
+      /api/boards/:id?fields=iconId title
+Тоді повертає вказані поля, по дефолту  поля "title iconId background"
 Реквест Body: -
 Приклад відповіді:
 {
-    "_id": "64ea61aa3ff64045765b1c67",
-    "title": "My board title 3",
-    "icon": 3,
-    "background": 13,
-    "columns": [
-        {
-            "columnId": "64ea8f2e01bda25f410bf8dc",
-            "columnTitle": "Column Title 2",
-            "_id": "64ea8f2f01bda25f410bf8df"
-        }
-    ]
+    "_id": "64f555d1968260dc14563e74",
+    "title": "Olga board title PATCHED",
+    "iconId": "test-icon-id",
+    "background": 15
+}
+Приклад відповіді для /api/boards/64f555d1968260dc14563e74?fields=iconId title
+{
+    "_id": "64f555d1968260dc14563e74",
+    "title": "Olga board title PATCHED",
+    "iconId": "test-icon-id"
 }
 
-## видалити дошку за Id
+## видалити дошку за Id FIXME:
 Тип запиту:     DELETE
 Маршрут:        /api/boards/:id
 Реквест Body: -
 Приклад відповіді:
 {
-    "message": "Board deleted( FIXME: delete all its columns and cards)"
+    "message": "Board deleted(delete all its columns and cards)"
 }
 
 ## додати колонку дошки
@@ -212,19 +162,14 @@
 Маршрут:        /api/boards/:id/columns
 Реквест Body:
 {
-   "title":"Column Title 2"
+   "title":"Column Title 1"
 }
 Приклад відповіді:
 {
-    "title": "Column Title 2",
-    "owner": "64f0ab840d512cdb2e218843",
+    "title": "Column Title 1",
+    "owner": "64f555d1968260dc14563e74",
     "cards": [],
-    "_id": "64f0ac0b0d512cdb2e218847",
-    "createdAt": "2023-08-31T15:04:43.996Z",
-    "updatedAt": "2023-08-31T15:04:43.996Z"
-}
-
-
-
-"Cast to ObjectId failed for value \"{\n  cardId: new ObjectId(\"64eabb7d7087d6304249ddcd\"),\n  cardTitle: 'Card Title 2 Ok'\n}\" (type Object) at path \"cards\" because of \"BSONError\""
+    "_id": "64f55844968260dc14563e82",
+    "createdAt": "2023-09-04T04:08:36.911Z",
+    "updatedAt": "2023-09-04T04:08:36.911Z"
 }
