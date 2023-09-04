@@ -24,7 +24,9 @@ const createToken = async (userId) => {
 
 // ** registerUser for export
 const registerUser = async (req, res) => {
-  const { name, email, password } = req.body;
+  let { name, email, password } = req.body;
+
+  email = email.toLowerCase();
 
   const user = await User.findOne({ email });
   if (user) {
@@ -40,6 +42,7 @@ const registerUser = async (req, res) => {
 
   const newUser = await User.create({
     ...req.body,
+    email, // SR: save email in LowerCase
     avatarURL,
   });
   const token = await createToken(newUser._id);
@@ -57,7 +60,9 @@ const registerUser = async (req, res) => {
 
 // ** loginUser for export
 const loginUser = async (req, res) => {
-  const { email, password } = req.body;
+  let { email, password } = req.body;
+  email = email.toLowerCase();
+
   const user = await User.findOne({ email });
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
@@ -73,7 +78,7 @@ const loginUser = async (req, res) => {
     token,
     user: {
       name: user.name,
-      email,
+      email: user.email,
       theme: user.theme,
       avatarURL: user.avatarURL,
     },
@@ -93,34 +98,33 @@ const loginGoogleUser = async (req, res) => {
         name: user.name,
         email: user.email,
         theme: user.theme,
-        avatarURL: user.avatarURL
+        avatarURL: user.avatarURL,
       },
-    })
+    });
   }
-  
-  if (!user) {  
+
+  if (!user) {
     const avatarURL = gravatar.url(email, {
       r: "pg",
       d: "mp",
     });
 
     const user = await User.create({
-    ...req.body,
-    avatarURL,
-    password: "google123"
-  });
-  const token = await createToken(user._id);
-  res.status(201).json({
-    token,
-    user: {
-      name,
-      email,
-      theme: user.theme,
-      avatarURL
-    },
-  })
+      ...req.body,
+      avatarURL,
+      password: "google123",
+    });
+    const token = await createToken(user._id);
+    res.status(201).json({
+      token,
+      user: {
+        name,
+        email,
+        theme: user.theme,
+        avatarURL,
+      },
+    });
   }
-  
 };
 
 // ** logoutUser  for export
