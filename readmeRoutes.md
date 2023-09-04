@@ -21,7 +21,6 @@ router.get("/:id", boardsController.getById);
 router.delete("/:id", boardsController.deleteById);
 
 # add board
-//TODO: UPDATED! to allow iconId and backgroundURL fields
 router.post("/", boardsController.add);
 
 # update board by id (NB! except columns list)

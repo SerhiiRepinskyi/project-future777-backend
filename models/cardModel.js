@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { handleMongooseError, validateAtUpdate } from "./hooks.js"; // TODO: update
+import { handleMongooseError, validateAtUpdate } from "./hooks.js"; 
 
 const cardSchema = new Schema(
 	{

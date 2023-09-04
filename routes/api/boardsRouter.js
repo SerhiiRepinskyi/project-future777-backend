@@ -34,7 +34,7 @@ router.patch(
   "/:id",
   //TODO: isEmptyBody,
   isValidId,
-  validateBody(boardsSchemas.boardUpdate), //FIXME: should be same as create ?
+  validateBody(boardsSchemas.boardUpdate), //TODO: should be same as create ?
   boardsController.updateById
 );
 
