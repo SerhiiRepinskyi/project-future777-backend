@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import columnsController from "../../controllers/columnsController.js";
-import boardsSchemas from "../../schemas/boardsSchemas.js"; // TODO: ?
+import boardsSchemas from "../../schemas/boardsSchemas.js"; 
 import validateBody from "../../decorators/validateBody.js";
 import isValidId from "../../middlewares/isValidId.js";
 import authenticate from "../../middlewares/authenticate.js";

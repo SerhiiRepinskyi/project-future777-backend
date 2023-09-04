@@ -88,7 +88,7 @@ export default {
   getAllCards: ctrlWrapper(getAllCards), // TODO: no need???
   getColumnById: ctrlWrapper(getColumnById),
 	updateColumn: ctrlWrapper(updateColumn),
-	deleteById: ctrlWrapper(deleteById), //FIXME: delete all from cards list
+	deleteById: ctrlWrapper(deleteById), 
 	updateCards: ctrlWrapper(updateCards), // TODO: only for drag-n-drop
 	addCard: ctrlWrapper(addCard),
 };

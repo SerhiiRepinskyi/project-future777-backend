@@ -1,16 +1,6 @@
 import { Schema, model } from "mongoose";
 import { handleMongooseError, validateAtUpdate } from "./hooks.js";
-/*
- //TODO: removed
-  icon: {
-			type: Number, // 0..7
-			default: 0,
-		},
-    backgroundURL: {
-			type: String,
-		},
-    columns: [{ columnId: String, columnTitle: String }],
-   */
+
 const boardSchema = new Schema(
   {
     title: {
@@ -30,7 +20,7 @@ const boardSchema = new Schema(
       required: true,
     },
 
-    content: [{ type: Schema.Types.ObjectId, ref: "column" }], // "card" }], //FIXME: ???
+    content: [{ type: Schema.Types.ObjectId, ref: "column" }],
 
 		// TODO:  for future // isDeleted: { type: Boolean, default: false },
 	},

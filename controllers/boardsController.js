@@ -32,13 +32,12 @@ const getAll = async (req, res) => {
  * othewise "title iconId background" fields
  */
 const getById = async (req, res) => {
-	//FIXME:
 	let { fields } = req.query;
 	const { id } = req.params;
 	const result = await Board.findById(
 		id,
 		fields ?? BOARD_FIELDS_DEFAULT
-	).lean(); //"-owner -createdAt -updatedAt -__v");
+	).lean();
 	if (!result) {
 		throw HttpError(404, BOARD_NOT_FOUND(id));
 	}
@@ -103,7 +102,7 @@ const updateById = async (req, res) => {
 
 // ** update list of columns // TODO: only for drag-n-drop
 const updateColumns = async (req, res) => {
-	throw HttpError(404, `id=${id} under construction FIXME:`);
+	throw HttpError(404, `id=${id} under construction TODO:`);
 
 	const { id } = req.params;
 	const result = await Board.findByIdAndUpdate(id, req.body, { new: true });
@@ -138,9 +137,9 @@ export default {
 	getContent: ctrlWrapper(getContent),
 	getAll: ctrlWrapper(getAll),
 	add: ctrlWrapper(add),
-	getById: ctrlWrapper(getById), //FIXME: not needed???
+	getById: ctrlWrapper(getById), //TODO: not needed???
 	updateById: ctrlWrapper(updateById),
-	deleteById: ctrlWrapper(deleteById), //FIXME: delete all from cards list
+	deleteById: ctrlWrapper(deleteById),
 	updateColumns: ctrlWrapper(updateColumns),
 	addColumn: ctrlWrapper(addColumn),
 };

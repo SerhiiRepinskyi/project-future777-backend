@@ -29,7 +29,7 @@ router.delete("/:id", isValidId, cardsController.deleteById);
 router.patch(
   "/:id",
   isValidId,
-  validateBody(boardsSchemas.cardMove), // FIXME:
+  validateBody(boardsSchemas.cardMove), // FIXME: isValidId? somehow...
   cardsController.moveCard
 );
 

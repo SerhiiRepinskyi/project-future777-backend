@@ -148,7 +148,7 @@ NB! може включати fields параметр, наприклад,
     "iconId": "test-icon-id"
 }
 
-## видалити дошку за Id FIXME:
+## видалити дошку за Id 
 Тип запиту:     DELETE
 Маршрут:        /api/boards/:id
 Реквест Body: -
