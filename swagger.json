@@ -2,7 +2,7 @@
     "openapi": "3.0.1",
     "type": "module",
     "info": {
-        "version": "2.0",
+        "version": "3.0",
         "title": "Project-future777-backend",
         "description": "Swagger for Project-future777"
     },
@@ -111,6 +111,70 @@
                 },
                 "responses": {
                     "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/registrationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request (email and password are required)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "missing required email or password field",
+                                            "example": "missing required email or password field"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Email or password is wrong",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Email or password is wrong",
+                                            "example": "Email or password is wrong"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/google": {
+            "post": {
+                "tags": ["Auth"],
+                "summary": "Registering a user or signing in with a Google account",
+                "parameters": [],
+                "requestBody": {
+                    "description": "Login's object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/googleRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
@@ -1250,6 +1314,21 @@
                         "type": "string",
                         "description": "User's password (8-64 symbols)",
                         "example": "qwerty12345"
+                    }
+                }
+            },
+            "googleRequest": {
+                "type": "object",
+                "required": ["name", "email", "password"],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name (2-32 symbols)"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
                     }
                 }
             },
