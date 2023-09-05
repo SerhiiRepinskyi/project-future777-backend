@@ -66,7 +66,7 @@ const updateCards = async (req, res) => {
 
 // ** add card
 const addCard = async (req, res) => {
-	//console.log("addCard>>>>>>>>>>>>>>>>>>");
+	console.log("addCard>>>>>deadline", req.body.deadline);
 	const { id: owner } = req.params;
 	const column = await Column.findById(owner);
 	if (!column) {
@@ -88,7 +88,7 @@ export default {
   getAllCards: ctrlWrapper(getAllCards), // TODO: no need???
   getColumnById: ctrlWrapper(getColumnById),
 	updateColumn: ctrlWrapper(updateColumn),
-	deleteById: ctrlWrapper(deleteById), 
+	deleteById: ctrlWrapper(deleteById),
 	updateCards: ctrlWrapper(updateCards), // TODO: only for drag-n-drop
 	addCard: ctrlWrapper(addCard),
 };
