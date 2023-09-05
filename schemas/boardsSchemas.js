@@ -24,7 +24,7 @@ const boardUpdateColumns = Joi.object({
 });
 
 const prioritySchema = Joi.number().integer().min(0).max(3);
-const deadlineSchema = Joi.date().greater("now").iso();
+const deadlineSchema = Joi.date().min("now").iso(); 
 const cardAdd = Joi.object({
 	title: Joi.string().required(),
 	description: Joi.string().required(),
