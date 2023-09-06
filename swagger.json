@@ -2,7 +2,7 @@
     "openapi": "3.0.1",
     "type": "module",
     "info": {
-        "version": "3.0",
+        "version": "3.1",
         "title": "Project-future777-backend",
         "description": "Swagger for Project-future777"
     },
@@ -232,6 +232,7 @@
             "patch": {
                 "tags": ["Users"],
                 "summary": "Update user info",
+                "description": "The <b>name</b> field can contain from 2 to 32 characters, the <b>password</b> field can contain from 8 to 64 characters (latin alphabet, symbols or numbers)",
                 "parameters": [],
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
@@ -251,17 +252,17 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/currentUserResponse"
+                                    "$ref": "#/components/schemas/updateUserResponse"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "Bad request (name, email and password are required)",
+                        "description": "Bad request (name and email are required)",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/400Response"
+                                    "$ref": "#/components/schemas/400CurentUserResponse"
                                 }
                             }
                         }
@@ -313,6 +314,7 @@
             "patch": {
                 "tags": ["Users"],
                 "summary": "Update theme",
+                "description": "The <b>theme</b> field must be <b>light</b>, <b>dark</b> or <b>violet</b>",
                 "parameters": [],
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
@@ -332,13 +334,13 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/currentUserResponse"
+                                    "$ref": "#/components/schemas/updateUserResponse"
                                 }
                             }
                         }
                     },
                     "400": {
-                        "description": "Bad request (theme is required)",
+                        "description": "Bad request (theme is required and must be one of [light, dark, violet]",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -346,8 +348,8 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "description": "theme is required",
-                                            "example": "theme is required"
+                                            "description": "theme is required / theme must be one of [light, dark, violet]",
+                                            "example": "theme is required / theme must be one of [light, dark, violet]"
                                         }
                                     }
                                 }
@@ -371,15 +373,27 @@
             "patch": {
                 "tags": ["Users"],
                 "summary": "Change avatar",
-                "parameters": [],
+                "consumes": [
+                    "multipart/form-data"
+                ],
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
-                    "description": "Change user's avatar",
-                    "required": true,
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "$ref": "#/components/schemas/updateAvatarRequest"
+                                "type": "object",
+                                "properties": {
+                                    "avatarURL": {
+                                        "type": "string",
+                                        "format": "binary",
+                                        "nullable": true
+                                    }
+                                }
+                            },
+                            "encoding": {
+                                "avatarURL": {
+                                    "style": "form"
+                                }
                             }
                         }
                     }
@@ -431,8 +445,8 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "description": "Cannot destructure property 'path' of 'req.file' as it is undefined",
-                                            "example": "Cannot destructure property 'path' of 'req.file' as it is undefined"
+                                            "description": "Cannot destructure property 'path' of 'req.file' as it is undefined / Unexpected field ",
+                                            "example": "Cannot destructure property 'path' of 'req.file' as it is undefined / Unexpected field"
                                         }
                                     }
                                 }
@@ -461,7 +475,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Email send success"                    
+                        "description": "Email send success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Email send success",
+                                            "example": "Email send success"
+                                        }
+                                    }
+                                }
+                            }
+                        }                    
                     },
                     "400": {
                         "description": "Email and comment are required field",
@@ -1333,6 +1361,49 @@
                 }
             },
             "currentUserResponse": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "User's name"
+                    },
+                    "email": {
+                        "type": "string",
+                        "description": "User's email",
+                        "format": "email"
+                    },
+                    "theme": {
+                        "type": "string",
+                        "description": "User's password",
+                        "example": "dark"
+                    },
+                    "avatarURL": {
+                        "type": "string",
+                        "description": "User's avatar"
+                    }
+                }
+            },
+            "400CurentUserResponse": {
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "description": "missing required name or email field",
+                        "example": "missing required name or email field"
+                    }
+                }
+            },
+            "updateThemeRequest": {
+                "type": "object",
+                "required": ["theme"],
+                "properties": {
+                    "theme": {
+                        "type": "string",
+                        "description": "User's theme",
+                        "example": "dark"
+                    }
+                }
+            },
+            "updateUserResponse": {
                 "properties": {
                     "user": {
                         "type": "object",
@@ -1359,22 +1430,11 @@
                     }
                 }
             },
-            "updateThemeRequest": {
-                "type": "object",
-                "required": ["theme"],
-                "properties": {
-                    "theme": {
-                        "type": "string",
-                        "description": "User's theme",
-                        "example": "dark"
-                    }
-                }
-            },
             "updateAvatarRequest": {
                 "type": "object",
                 "required": ["file"],
                 "properties": {
-                    "file": {
+                    "avatarURL": {
                         "type": "string",
                         "description": "User's avatar"
                     }
@@ -1386,7 +1446,13 @@
                     "avatarURL": {
                         "type": "string",
                         "description": "User's avatar URL file"
+                    },
+                    "signature": {
+                        "type": "string",
+                        "description": "Cloudinary signature",
+                        "example": "1ed37dee0e3832019d4a99a34ae578c287dccdfe"
                     }
+                    
                 }
             },
             "needHelpRequest": {
@@ -1405,7 +1471,7 @@
             },
             "updateUserRequest": {
                 "type": "object",
-                "required": ["name", "email", "password"],
+                "required": ["name", "email"],
                 "properties": {
                     "name": {
                         "type": "string",
@@ -1693,7 +1759,6 @@
                     }
                 }
             },
-
             "404NotFoundResponse": {
                 "type": "object",
                 "properties": {
