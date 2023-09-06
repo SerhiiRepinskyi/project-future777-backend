@@ -1269,67 +1269,6 @@
                         }
                     }
                 }
-            },
-            "patch": {
-                "tags": ["Cards"],
-                "summary": "Move card - ДОДЕЛАТЬ drag-n-drop",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "type": "string",
-                        "description": "Card's id"
-                    }
-                ],
-                "security": [{ "Bearer": [] }],
-                "requestBody": {
-                    "description": "Card's object",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/moveCardRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/moveCardResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "newOwnerId is required",
-                        "content": {}
-                    },
-                    "401": {
-                        "description": "Not autorizated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/401Response"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "ID is not valid / Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/404NotFoundResponse"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         }
     },
