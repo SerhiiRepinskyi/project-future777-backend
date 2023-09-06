@@ -2,7 +2,7 @@
     "openapi": "3.0.1",
     "type": "module",
     "info": {
-        "version": "3.1",
+        "version": "3.2",
         "title": "Project-future777-backend",
         "description": "Swagger for Project-future777"
     },
@@ -578,7 +578,7 @@
                         }
                     },
                     "400": {
-                        "description": "Title, icon and background are required",
+                        "description": "Title, iconId and background are required",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -586,8 +586,8 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "description": "title/icon/background is required",
-                                            "example": "title/icon/background is required"
+                                            "description": "title/iconId/background is required",
+                                            "example": "title/iconId/background is required"
                                         }
                                     }
                                 }
@@ -677,7 +677,21 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Board deleted"
+                        "description": "Board deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Board is deleted with all its content",
+                                            "example": "Board is deleted with all its content"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "Not found",
@@ -732,6 +746,58 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/boardAddResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ID is not valid / Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not autorizated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401Response"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/boards/{id}/content": {
+            "get": {
+                "tags": ["Boards"],
+                "summary": "Get board's content by Id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Board's id"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Board's object",
+                    "content": {}
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getBoardContentResponse"
                                 }
                             }
                         }
@@ -833,80 +899,6 @@
                         }
                     }
                 }
-            },
-            "patch": {
-                "tags": ["Columns"],
-                "summary": "Update column's list - ДОДЕЛАТЬ drag-n-drop",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "id",
-                        "required": true,
-                        "type": "string",
-                        "description": "Board's id"
-                    }
-                ],
-                "security": [{ "Bearer": [] }],
-                "requestBody": {
-                    "description": "Сolumn's object",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/updateColumnsListRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/updateColumnsListResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Column is required",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "description": "Column is required",
-                                            "example": "Column is required"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "ID is not valid / Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/404NotFoundResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Not autorizated",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/401Response"
-                                }
-                            }
-                        }
-                    }
-                }
             }
         },
         "/columns/{id}": {
@@ -925,11 +917,29 @@
                 "security": [{ "Bearer": [] }],
                 "requestBody": {
                     "description": "Column's object",
-                    "content": {}
+                    "content": {
+                        "application/json": {
+                            "type": "object"
+                        }
+                    }
                 },
                 "responses": {
                     "200": {
-                        "description": "Column deleted"
+                        "description": "Column deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Column is deleted with all its content",
+                                            "example": "Column is deleted with all its content"
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     },
                     "404": {
                         "description": "ID is not valid / Not found",
@@ -1001,6 +1011,56 @@
                                             "example": "Title is required"
                                         }
                                     }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Not autorizated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/401Response"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "ID is not valid / Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/404NotFoundResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["Columns"],
+                "summary": "Get column by Id",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "type": "string",
+                        "description": "Сolumn's id"
+                    }
+                ],
+                "security": [{ "Bearer": [] }],
+                "requestBody": {
+                    "description": "Column's object",
+                    "content": {}
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/getColumnResponse"
                                 }
                             }
                         }
@@ -1491,15 +1551,15 @@
             },
             "boardAddRequest": {
                 "type": "object",
-                "required": ["title", "icon", "background"],
+                "required": ["title", "iconId", "background"],
                 "properties": {
                     "title": {
                         "type": "string",
                         "description": "Board's title"
                     },
-                    "icon": {
-                        "type": "integer",
-                        "description": "Number of board's icon (0-7)"
+                    "iconId": {
+                        "type": "string",
+                        "description": "Name of icon"
                     },
                     "background": {
                         "type": "integer",
@@ -1514,8 +1574,8 @@
                         "type": "string",
                         "description": "Board's title"
                     },
-                    "icon": {
-                        "type": "integer",
+                    "iconId": {
+                        "type": "string",
                         "description": "Board's icon"
                     },
                     "background": {
@@ -1526,16 +1586,16 @@
                         "type": "string",
                         "description": "Board's owner id"
                     },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "description": "Content"
+                        }
+                    },
                     "_id": {
                         "type": "string",
                         "description": "Board's id"
-                    },
-                    "columns": {
-                        "type": "array",
-                        "items": {
-                            "type": "string",
-                            "description": "Board's columns"
-                        }
                     },
                     "createdAt": {
                         "type": "string",
@@ -1558,33 +1618,13 @@
                         "type": "string",
                         "description": "Board's title"
                     },
-                    "icon": {
-                        "type": "integer",
+                    "iconId": {
+                        "type": "string",
                         "description": "Board's icon"
                     },
                     "background": {
                         "type": "integer",
                         "description": "Board's background"
-                    },
-                    "columns": {
-                        "type": "array",
-                        "items": {
-                            "type": "object",
-                            "properties": {
-                                "columnId": {
-                                    "type": "string",
-                                    "description": "Column's id"
-                                },
-                                "columnTitle": {
-                                    "type": "string",
-                                    "description": "Column's title"
-                                },
-                                "_id": {
-                                    "type": "string",
-                                    "description": "id"
-                                }
-                            }                    
-                        }
                     }
                 }
             },
@@ -1595,13 +1635,78 @@
                         "type": "string",
                         "description": "Board's title"
                     },
-                    "icon": {
-                        "type": "integer",
-                        "description": "Number of board's icon (0-7)"
+                    "iconId": {
+                        "type": "string",
+                        "description": "Name of icon"
                     },
                     "background": {
                         "type": "integer",
                         "description": "Number of board's background (0-7)"
+                    }
+                }
+            },
+            "getBoardContentResponse": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Board's id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Board's title"
+                    },
+                    "iconId": {
+                        "type": "string",
+                        "description": "Board's icon"
+                    },
+                    "background": {
+                        "type": "integer",
+                        "description": "Board's background"
+                    },
+                    "content": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "_id": {
+                                    "type": "string",
+                                    "description": "Column's id"
+                                },
+                                "title": {
+                                    "type": "string",
+                                    "description": "Column's title"
+                                },
+                                "cards": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "_id": {
+                                                "type": "string",
+                                                "description": "Card's id"
+                                            },
+                                            "title": {
+                                                "type": "string",
+                                                "description": "Card's title"
+                                            },
+                                            "description": {
+                                                "type": "string",
+                                                "description": "Card's description"
+                                            },
+                                            "priority": {
+                                                "type": "integer",
+                                                "description": "Card's priority"
+                                            },
+                                            "deadline": {
+                                                "type": "string",
+                                                "description": "Card's deadline"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1633,7 +1738,7 @@
                     "cards": {
                         "type": "array",
                         "items": {
-                            "type": "string",
+                            "type": "object",
                             "description": "Column's cards"
                         }
                     },
@@ -1666,6 +1771,26 @@
                     "_id": {
                         "type": "string",
                         "description": "Column's id"
+                    }
+                }
+            },
+            "getColumnResponse": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "Column's id"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Column's title"
+                    },
+                    "cards": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Card's list items"
+                        }
                     }
                 }
             },
